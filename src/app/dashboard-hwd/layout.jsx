@@ -1,47 +1,27 @@
 "use client";
 import Link from "next/link";
 import "../globals.css";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AdminLayout({ children }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [authChecked, setAuthChecked] = useState(false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      if (!user && pathname !== "/dashboard-hwd/login") {
-        router.replace("/dashboard-hwd/login");
-      }
-      setAuthChecked(true);
-    });
-    return () => unsubscribe();
-  }, [router, pathname]);
-
+  // 클라이언트 컴포넌트로 동작하도록 use client 선언
+  // 로그아웃 버튼 클릭 시 signOut 및 라우팅
+  if (typeof window !== "undefined") {
+    // use client
+  }
+  const router = typeof window !== "undefined" ? require("next/navigation").useRouter() : null;
   const handleLogout = async () => {
     await signOut(auth);
     router.push("/dashboard-hwd/login");
   };
 
-  if (!authChecked && pathname !== "/dashboard-hwd/login") {
-    return null; // 인증 체크 전에는 아무것도 렌더링하지 않음
-  }
-
-  // 로그인 페이지에서는 사이드바 없이 children만 렌더링
-  if (pathname === "/dashboard-hwd/login") {
-    return <>{children}</>;
-  }
-
   return (
     <div className="flex h-screen">
       <aside className="w-64 bg-gray-900 text-white flex flex-col p-6 justify-between">
         <div>
-          <h2 className="text-2xl font-bold mb-8">관리자</h2>
+          <h3 className="text-xl font-bold mb-8">할리우드 관리자페이지</h3>
           <nav className="flex flex-col gap-4">
             <Link href="/dashboard-hwd">대시보드 홈</Link>
             <Link href="/dashboard-hwd/products">상품 관리</Link>

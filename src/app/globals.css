@@ -83,6 +83,28 @@ body > div {
   @apply bg-gray-300 text-black px-6 py-2 rounded-lg cursor-pointer hover:bg-gray-300/90 md:text-base text-sm;
 }
 
+.admin-btn {
+  @apply bg-gray-900 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-150 cursor-pointer md:text-base text-sm;
+}
+.admin-btn:hover:enabled {
+  @apply bg-gray-800;
+}
+.admin-btn:disabled {
+  @apply opacity-60 cursor-not-allowed bg-gray-900 text-white;
+  pointer-events: none;
+}
+
+.admin-btn-sub {
+  @apply bg-gray-200 text-gray-900 px-6 py-2 rounded-lg font-semibold transition-all duration-150 cursor-pointer md:text-base text-sm;
+}
+.admin-btn-sub:hover:enabled {
+  @apply bg-gray-300;
+}
+.admin-btn-sub:disabled {
+  @apply opacity-60 cursor-not-allowed bg-gray-200 text-gray-900;
+  pointer-events: none;
+}
+
 /* 7. 애니메이션 */
 @keyframes marquee {
   0% {
