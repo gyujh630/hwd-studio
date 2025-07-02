@@ -19,6 +19,13 @@ export default function AdminLayout({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsLoggedIn(!!user);
+      // 로그인 안된 경우 로그인 페이지로 리다이렉트
+      if (!user) {
+        // 현재 경로가 /dashboard-hwd/login 이 아니면 리다이렉트
+        if (window.location.pathname !== "/dashboard-hwd/login") {
+          router.push("/dashboard-hwd/login");
+        }
+      }
     });
     return () => unsubscribe();
   }, []);

@@ -31,13 +31,13 @@ export default function AdminLogin() {
         onSubmit={handleLogin}
         className="p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-200"
       >
-        <h1 className="text-2xl font-bold mb-6 text-center py-4">할리우드 관리자페이지</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center py-4">할리우드 관리자 대시보드</h1>
         <input
           type="email"
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-4 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none"
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
           required
         />
         <input
@@ -45,7 +45,7 @@ export default function AdminLogin() {
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-4 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none"
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
           required
         />
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
