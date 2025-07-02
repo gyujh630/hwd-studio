@@ -26,18 +26,18 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-full">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+        className="p-8 rounded-lg shadow-lg w-full max-w-md border border-gray-200"
       >
-        <h1 className="text-2xl font-bold mb-6 text-center">관리자 로그인</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center py-4">할리우드 관리자페이지</h1>
         <input
           type="email"
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-700"
+          className="w-full mb-4 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none"
           required
         />
         <input
@@ -45,13 +45,13 @@ export default function AdminLogin() {
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-700"
+          className="w-full mb-4 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none"
           required
         />
         {error && <div className="text-red-500 mb-4 text-center">{error}</div>}
         <button
           type="submit"
-          className="btn-primary w-full disabled:opacity-60"
+          className="admin-btn w-full my-4 disabled:opacity-60"
           disabled={loading}
         >
           {loading ? "로그인 중..." : "로그인"}

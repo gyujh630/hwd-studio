@@ -3,15 +3,20 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // 추가
 
 const MENU_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/product" },
-  { label: "Custom Made", href: "/custom-made" }
+  { label: "Custom Made", href: "/custom-made" },
 ];
 
 export default function Topbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname(); // 현재 경로 가져오기
+
+  // /dashboard-hwd 또는 그 하위 경로일 경우 Topbar 숨김
+  if (pathname?.startsWith("/dashboard-hwd")) return null;
 
   return (
     <header className="fixed top-4 left-0 w-full z-50 px-4 md:px-6 flex justify-end">
