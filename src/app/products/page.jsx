@@ -6,54 +6,45 @@ import { collection, getCountFromServer } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Pagination from "@/components/common/Pagination";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 1;
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
-  const [lastDocs, setLastDocs] = useState([]);
+  const [lastDocs, setLastDocs] = useState([null]);
   const [totalCount, setTotalCount] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
     let ignore = false;
-    async function load() {
-      setLoading(true);
-      setError("");
+    async function loadCount() {
       try {
         const countSnap = await getCountFromServer(collection(db, "products"));
         if (!ignore) setTotalCount(countSnap.data().count);
-
-        const { products: fetched, lastDoc } = await fetchProducts({ pageSize: PAGE_SIZE });
-        if (!ignore) {
-          setProducts(fetched);
-          setLastDocs([null, lastDoc]);
-        }
       } catch (err) {
-        setError("상품 목록을 불러오는 중 오류가 발생했습니다.");
-      } finally {
-        setLoading(false);
+        // 무시
       }
     }
-    load();
+    loadCount();
     return () => { ignore = true; };
   }, []);
 
   useEffect(() => {
-    if (page === 1 || lastDocs[page]) return;
     let ignore = false;
     async function loadPage() {
-      setLoading(true);
       setError("");
+      setLoading(true);
       try {
-        const { products: fetched, lastDoc } = await fetchProducts({ pageSize: PAGE_SIZE, lastDoc: lastDocs[page - 1] });
+        const lastDoc = page === 1 ? null : lastDocs[page - 1];
+        const { products: fetched, lastDoc: newLastDoc } = await fetchProducts({ pageSize: PAGE_SIZE, lastDoc });
         if (!ignore) {
           setProducts(fetched);
           setLastDocs(prev => {
+            if (prev.length > page) return prev;
             const copy = [...prev];
-            copy[page] = lastDoc;
+            copy[page] = newLastDoc;
             return copy;
           });
         }
@@ -65,9 +56,8 @@ export default function ProductsPage() {
     }
     loadPage();
     return () => { ignore = true; };
-  }, [page, lastDocs]);
+  }, [page]);
 
-  if (loading) return <div className="text-center py-16 text-gray-500">불러오는 중...</div>;
   if (error) return <div className="text-center py-16 text-red-500">{error}</div>;
 
   const totalPages = Math.ceil(totalCount / PAGE_SIZE) || 1;
@@ -75,10 +65,14 @@ export default function ProductsPage() {
 
   return (
     <div className="w-full mx-auto px-12 py-24 metallic-base-bg">
-      <div className="w-full flex justify-center my-4">
-        <h1 className="text-sm md:text-base font-bold text-center w-full">
-          {totalCount} {totalCount === 1 ? 'Item' : 'Items'}
-        </h1>
+      <div className="w-full flex justify-center my-4 min-h-[2.5rem]">
+        {loading ? (
+          <span className="animate-spin inline-block w-6 h-6 border-4 border-gray-300 border-t-gray-900 rounded-full" />
+        ) : (
+          <h1 className="text-sm md:text-base font-bold text-center w-full">
+            {totalCount} {totalCount === 1 ? 'Item' : 'Items'}
+          </h1>
+        )}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {pagedProducts.map((product) => {
@@ -129,9 +123,11 @@ export default function ProductsPage() {
         })}
       </div>
       {/* Pagination */}
-      <div className="flex justify-center mt-10">
-        <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
-      </div>
+      {!loading && (
+        <div className="flex justify-center mt-10">
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+        </div>
+      )}
     </div>
   );
 } 

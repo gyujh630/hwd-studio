@@ -8,7 +8,7 @@ import { fetchProducts } from "@/lib/firebaseProduct";
 export default function ProductsPage() {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 1;
   const [products, setProducts] = useState([]);
   const [lastDoc, setLastDoc] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -54,10 +54,11 @@ export default function ProductsPage() {
           상품 생성
         </button>
       </div>
-      {loading && <div className="text-center text-gray-500 py-8">불러오는 중...</div>}
       {error && <div className="text-center text-red-500 py-8">{error}</div>}
+      {console.log("products:", products, "length:", products.length)}
       <ProductList
         products={products}
+        loading={loading}
         onItemClick={(product) => router.push(`/dashboard-hwd/products/${product.id}`)}
       />
       <Pagination page={page} totalPages={hasMore ? page + 1 : page} onPageChange={handlePageChange} />

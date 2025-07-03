@@ -9,10 +9,10 @@ export default function Pagination({ page, totalPages, onPageChange }) {
           key={i}
           onClick={() => onPageChange(i + 1)}
           className={[
-            "w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold",
+            "w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold cursor-pointer",
             page === i + 1
               ? "bg-gray-900 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              : "bg-transparent text-gray-700 hover:bg-gray-200"
           ].join(" ")}
           aria-current={page === i + 1 ? "page" : undefined}
         >
