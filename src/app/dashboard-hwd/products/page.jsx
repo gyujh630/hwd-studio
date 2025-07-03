@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ProductList from "./ProductList";
-import Pagination from "./Pagination";
+import Pagination from "@/components/common/Pagination";
 import { fetchProducts } from "@/lib/firebaseProduct";
 
 export default function ProductsPage() {
