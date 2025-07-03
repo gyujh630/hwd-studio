@@ -24,9 +24,9 @@ export default function Topbar() {
     >
       <div className={`hidden sm:flex w-full items-center ${!isHome ? "justify-between" : "justify-end"} bg-${isHome ? "gray-200/30" : "transparent"} backdrop-blur-md rounded-3xl px-6 py-3`}>
         {!isHome && (
-          <span className="font-bold tracking-widest text-stone-900">
+          <Link href="/" className="font-bold tracking-widest text-stone-900 cursor-pointer">
             HOLLYWOOD STORE
-          </span>
+          </Link>
         )}
         <nav className="flex space-x-10">
           {MENU_ITEMS.map((item) => (
