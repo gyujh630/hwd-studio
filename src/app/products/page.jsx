@@ -96,7 +96,7 @@ export default function ProductsPage() {
                     alt={product.name}
                     className="object-contain w-full h-full"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100" />
+                  <div className="absolute inset-0 bg-black/25 opacity-0 hover:opacity-100" />
                 </div>
               )}
               <div
