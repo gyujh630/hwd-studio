@@ -35,7 +35,13 @@ export default function Topbar() {
               href={item.href}
               className={[
                 "text-sm cursor-pointer",
-                pathname === item.href ? "text-orange-700" : "text-black",
+                item.href === "/"
+                  ? pathname === "/"
+                    ? "text-orange-700"
+                    : "text-black"
+                  : pathname.startsWith(item.href)
+                    ? "text-orange-700"
+                    : "text-black",
                 "hover:text-orange-700"
               ].join(" ")}
             >
@@ -72,7 +78,13 @@ export default function Topbar() {
                 href={item.href}
                 className={[
                   "ml-4 block cursor-pointer",
-                  pathname === item.href ? "text-orange-700" : "text-gray-900",
+                  item.href === "/"
+                    ? pathname === "/"
+                      ? "text-orange-700"
+                      : "text-gray-900"
+                    : pathname.startsWith(item.href)
+                      ? "text-orange-700"
+                      : "text-gray-900",
                   "hover:text-orange-700"
                 ].join(" ")}
                 onClick={() => setIsOpen(false)}
