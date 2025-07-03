@@ -26,9 +26,9 @@ export default function Topbar() {
     >
       <div
         className={`hidden sm:flex w-full items-center ${
-          !isHome ? "justify-between" : "justify-end"
+          !isHome ? "justify-between" : "justify-end backdrop-blur-md"
         } bg-${
-          isHome ? "backdrop-blur-md gray-200/30" : "transparent"
+          isHome ? "gray-200/30" : "transparent"
         } rounded-3xl px-6 py-3`}
       >
         {!isHome && (
