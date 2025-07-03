@@ -22,7 +22,7 @@ export default function Topbar() {
     <header
       className={`fixed top-4 ${isHome ? "right-0" : "w-full left-0"} z-50 px-4 md:px-6 flex justify-end`}
     >
-      <div className={`hidden sm:flex w-full items-center ${!isHome ? "justify-between" : "justify-end"} bg-gray-200/30 backdrop-blur-md rounded-3xl px-6 py-3`}>
+      <div className={`hidden sm:flex w-full items-center ${!isHome ? "justify-between" : "justify-end"} bg-${isHome ? "gray-200/30" : "transparent"} backdrop-blur-md rounded-3xl px-6 py-3`}>
         {!isHome && (
           <span className="font-bold tracking-widest text-stone-900">
             HOLLYWOOD STORE
