@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import Image from "next/image";
 // import { HexColorPicker } from "react-colorful"; // 실제 적용 시 주석 해제 필요
 
 export default function ProductForm({ initialData = {}, onSubmit, isEdit = false }) {
@@ -129,7 +130,9 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
                 />
                 <span className="text-xs text-blue-600 font-bold">대표</span>
               </div>
-              <img src={photo.preview || photo.fileUrl || ""} alt="미리보기" className="w-32 h-32 object-cover rounded mb-2" />
+              {photo.preview || photo.fileUrl ? (
+                <Image src={photo.preview || photo.fileUrl || ""} alt="미리보기" width={128} height={128} className="w-32 h-32 object-cover rounded mb-2" />
+              ) : null}
               <input
                 className="input bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300 w-full px-2 py-1 rounded mb-1"
                 placeholder="색상명 (예: Walnut, Red)"

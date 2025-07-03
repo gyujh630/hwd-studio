@@ -37,17 +37,17 @@ export default function HomeProductsSection({ vh }) {
         >
           <div className="space-y-4">
             <h2 className="text-xl md:text-3xl lg:text-5xl font-bold leading-tight tracking-tight">
-              Custom Made
+              공간과 취향을 고려한
               <br />
               <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                Furniture
+                1:1 맞춤 제작
               </span>
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-gray-800 to-gray-400 mx-auto lg:mx-0 rounded-full" />
           </div>
 
           <p className="md:leading-7 md:text-base text-sm text-black/80">
-            원하는 디자인, 사이즈, 컬러까지
+            원하는 디자인, 사이즈, 색상까지
             <br />
             세상에 단 하나뿐인 가구를 제작해드립니다.
             <br />

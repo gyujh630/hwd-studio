@@ -62,7 +62,6 @@ export async function createProduct(product) {
 
 // 상품 목록 조회 (페이지네이션)
 export async function fetchProducts({ pageSize = 10, lastDoc = null }) {
-  checkAuthOrRedirect();
   let q = query(collection(db, "products"), orderBy("createdAt", "desc"), limit(pageSize));
   if (lastDoc) q = query(q, startAfter(lastDoc));
   const snap = await getDocs(q);
@@ -72,7 +71,6 @@ export async function fetchProducts({ pageSize = 10, lastDoc = null }) {
 
 // 상품 상세 조회
 export async function fetchProductById(id) {
-  checkAuthOrRedirect();
   const docRef = doc(db, "products", id);
   const snap = await getDoc(docRef);
   if (!snap.exists()) return null;

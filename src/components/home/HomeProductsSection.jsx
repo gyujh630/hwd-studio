@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const images = ["/images/furnitures/fun1.png", "/images/furnitures/fun2.png"];
 
 export default function HomeProductsSection({ vh }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   const prev = () =>
     setCurrentIdx((prev) => (prev - 1 + images.length) % images.length);
@@ -126,7 +128,7 @@ export default function HomeProductsSection({ vh }) {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
-            <button className="btn-primary w-full font-semibold">제품 보러가기</button>
+            <button className="btn-primary w-full font-semibold" onClick={() => router.push("/products")}>제품 보러가기</button>
             {/* <button className="btn-sub">카탈로그 보기</button> */}
           </div>
         </div>

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import HomeRotatingSection from "./home/HomeRotatingSection";
-import HomeProductsSection from "./home/HomeProductsSection";
-import HomeCustomMadeSection from "./home/HomeCustomMadeSection";
+import HomeRotatingSection from "../home/HomeRotatingSection";
+import HomeProductsSection from "../home/HomeProductsSection";
+import HomeCustomMadeSection from "../home/HomeCustomMadeSection";
 import Footer from "./Footer";
 
 export default function FullPageScroll() {
@@ -80,4 +80,4 @@ export default function FullPageScroll() {
       </div>
     </div>
   );
-}
+} 

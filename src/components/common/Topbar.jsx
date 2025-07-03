@@ -3,46 +3,52 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // 추가
+import { usePathname } from "next/navigation";
 
 const MENU_ITEMS = [
   { label: "Home", href: "/" },
-  { label: "Products", href: "/product" },
+  { label: "Products", href: "/products" },
   { label: "Custom Made", href: "/custom-made" },
 ];
 
 export default function Topbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname(); // 현재 경로 가져오기
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
-  // /dashboard-hwd 또는 그 하위 경로일 경우 Topbar 숨김
   if (pathname?.startsWith("/dashboard-hwd")) return null;
 
   return (
-    <header className="fixed top-4 left-0 w-full z-50 px-4 md:px-6 flex justify-end">
-      {/* Desktop menu */}
-      <nav className="hidden md:flex bg-gray-200/30 backdrop-blur-md rounded-3xl px-6 py-3 space-x-10">
-        {MENU_ITEMS.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="text-sm text-black hover:text-orange-700 cursor-pointer"
-          >
-            {item.label}
-          </Link>
-        ))}
-      </nav>
+    <header
+      className={`fixed top-4 ${isHome ? "right-0" : "w-full left-0"} z-50 px-4 md:px-6 flex justify-end`}
+    >
+      <div className={`hidden sm:flex w-full items-center ${!isHome ? "justify-between" : "justify-end"} bg-gray-200/30 backdrop-blur-md rounded-3xl px-6 py-3`}>
+        {!isHome && (
+          <span className="font-bold text-sm tracking-widest text-stone-900">
+            HOLLYWOOD STORE
+          </span>
+        )}
+        <nav className="flex space-x-10">
+          {MENU_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm text-black hover:text-orange-700 cursor-pointer"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
 
-      {/* Mobile menu button */}
       <button
-        className="md:hidden p-2 text-gray-900 bg-gray-200/20 backdrop-blur-xs rounded-lg cursor-pointer"
+        className="sm:hidden p-2 text-gray-900 bg-gray-200/20 backdrop-blur-xs rounded-lg cursor-pointer"
         onClick={() => setIsOpen(true)}
         aria-label="Open menu"
       >
         <Menu size={24} />
       </button>
 
-      {/* Mobile menu overlay */}
       {isOpen && (
         <div className="fixed inset-0 bg-white/60 backdrop-blur-lg z-50 flex flex-col p-6">
           <div className="flex justify-end">
@@ -71,4 +77,4 @@ export default function Topbar() {
       )}
     </header>
   );
-}
+} 

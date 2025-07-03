@@ -2,6 +2,7 @@
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchProductById, deleteProduct } from "@/lib/firebaseProduct";
+import Image from "next/image";
 
 export default function ProductDetailPage() {
   const router = useRouter();
@@ -60,7 +61,7 @@ export default function ProductDetailPage() {
     <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
       <div className="flex gap-8 mb-6">
         {thumbnail && (
-          <img src={thumbnail} alt={product.name} className="w-48 h-48 object-cover rounded" />
+          <Image src={thumbnail} alt={product.name} width={192} height={192} className="w-48 h-48 object-cover rounded" />
         )}
         <div className="flex-1">
           <h1 className="text-2xl font-bold mb-6">{product.name}</h1>
@@ -82,7 +83,7 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-2 gap-4">
           {product.photos?.map((photo, idx) => (
             <div key={idx} className="border border-gray-200 rounded p-2 flex flex-col items-center">
-              <img src={photo.fileUrl} alt={photo.colorName} className="w-24 h-24 object-cover rounded mb-1" />
+              <Image src={photo.fileUrl} alt={photo.colorName} width={96} height={96} className="w-24 h-24 object-cover rounded mb-1" />
               <div className="text-sm font-semibold">{photo.colorName}</div>
               <div className="flex items-center gap-2 mt-1">
                 <span className="w-4 h-4 rounded-full border" style={{ background: photo.colorValue }} />
