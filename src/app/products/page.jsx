@@ -6,7 +6,7 @@ import { collection, getCountFromServer } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Pagination from "@/components/common/Pagination";
 
-const PAGE_SIZE = 1;
+const PAGE_SIZE = 12;
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -64,7 +64,7 @@ export default function ProductsPage() {
   const pagedProducts = products;
 
   return (
-    <div className="w-full mx-auto px-12 py-24 metallic-base-bg">
+    <div className="w-full min-h-screen mx-auto px-12 py-24 metallic-base-bg overflow-auto">
       <div className="w-full flex justify-center my-4 min-h-[2.5rem]">
         {loading ? (
           <span className="animate-spin inline-block w-6 h-6 border-4 border-gray-300 border-t-gray-900 rounded-full" />

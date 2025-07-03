@@ -8,7 +8,7 @@ import { fetchProducts } from "@/lib/firebaseProduct";
 export default function ProductsPage() {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const pageSize = 1;
+  const pageSize = 10;
   const [products, setProducts] = useState([]);
   const [lastDoc, setLastDoc] = useState(null);
   const [loading, setLoading] = useState(false);
