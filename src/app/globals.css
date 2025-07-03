@@ -80,14 +80,14 @@ body > div {
 }
 
 .btn-sub {
-  @apply bg-gray-300 text-black px-6 py-2 rounded-lg cursor-pointer hover:bg-gray-300/90 md:text-base text-sm;
+  @apply bg-stone-700 text-white px-6 py-2 rounded-lg cursor-pointer hover:bg-stone-700/90 md:text-base text-sm;
 }
 
 .admin-btn {
-  @apply bg-gray-900 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-150 cursor-pointer md:text-base text-sm;
+  @apply bg-gray-800 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-150 cursor-pointer md:text-base text-sm;
 }
 .admin-btn:hover:enabled {
-  @apply bg-gray-800;
+  @apply bg-gray-700;
 }
 .admin-btn:disabled {
   @apply opacity-60 cursor-not-allowed bg-gray-900 text-white;

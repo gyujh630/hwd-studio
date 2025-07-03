@@ -35,7 +35,7 @@ export default function Topbar() {
 
       {/* Mobile menu button */}
       <button
-        className="md:hidden p-2 text-gray-900 bg-gray-200/20 backdrop-blur-xs rounded-lg"
+        className="md:hidden p-2 text-gray-900 bg-gray-200/20 backdrop-blur-xs rounded-lg cursor-pointer"
         onClick={() => setIsOpen(true)}
         aria-label="Open menu"
       >

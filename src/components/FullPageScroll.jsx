@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import HomeRotatingSection from "./home/HomeRotatingSection";
 import HomeProductsSection from "./home/HomeProductsSection";
+import HomeCustomMadeSection from "./home/HomeCustomMadeSection";
 import Footer from "./Footer";
 
 export default function FullPageScroll() {
@@ -51,6 +52,18 @@ export default function FullPageScroll() {
         }}
       >
         <HomeProductsSection vh={vh} />
+      </div>
+
+      {/* SECTION 3 */}
+      <div
+        className="section"
+        style={{
+          height: vh,
+          scrollSnapAlign: "start",
+          scrollSnapStop: "always",
+        }}
+      >
+        <HomeCustomMadeSection vh={vh} />
       </div>
 
       {/* FOOTER */}

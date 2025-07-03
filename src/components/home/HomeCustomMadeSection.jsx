@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const images = ["/images/furnitures/fun1.png", "/images/furnitures/fun2.png"];
+const images = ["/images/furnitures/carpenter1.png", "/images/furnitures/carpenter2.png"];
 
 export default function HomeProductsSection({ vh }) {
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -27,13 +27,53 @@ export default function HomeProductsSection({ vh }) {
         {/* 배경 장식 */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
 
-        {/* 왼쪽: 이미지 슬라이더 */}
+        {/* 왼쪽: 텍스트 + 버튼 */}
         <div
-          className={`relative transition-all duration-1000 ${
+          className={`text-center lg:text-left space-y-6 max-w-lg transition-all duration-1000 delay-300 ${
             isVisible
               ? "translate-x-0 opacity-100"
               : "-translate-x-20 opacity-0"
-          }`}
+          } order-2 lg:order-1`}
+        >
+          <div className="space-y-4">
+            <h2 className="text-xl md:text-3xl lg:text-5xl font-bold leading-tight tracking-tight">
+              Custom Made
+              <br />
+              <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+                Furniture
+              </span>
+            </h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-gray-800 to-gray-400 mx-auto lg:mx-0 rounded-full" />
+          </div>
+
+          <p className="md:leading-7 md:text-base text-sm text-black/80">
+            원하는 디자인, 사이즈, 컬러까지
+            <br />
+            세상에 단 하나뿐인 가구를 제작해드립니다.
+            <br />
+            라이프스타일과 공간에 꼭 맞는 맞춤 제작 서비스를 제공합니다.
+          </p>
+
+          <p className="text-xs text-gray-500">
+            · 모든 과정은 1:1 상담을 통해 진행됩니다.
+            <br />
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
+            <button className="btn-sub w-full font-semibold">
+              제품 둘러보기
+            </button>
+            <button className="btn-primary w-full font-semibold">
+              제작 문의하기
+            </button>
+          </div>
+        </div>
+
+        {/* 오른쪽: 이미지 슬라이더 */}
+        <div
+          className={`relative transition-all duration-1000 ${
+            isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
+          } order-1 lg:order-2`}
         >
           <div className="relative w-88 h-72 md:w-120 md:h-92 group">
             {/* 메인 이미지 */}
@@ -54,9 +94,11 @@ export default function HomeProductsSection({ vh }) {
                       src={src}
                       alt={`Furniture ${idx}`}
                       fill
-                      className="object-contain p-12 transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="200px"
                     />
+                    {/* 어두운 필터 레이어 */}
+                    <div className="absolute inset-0 bg-black/30 sm:bg-black/30 z-10 pointer-events-none" />
                   </div>
                 ))}
               </div>
@@ -91,42 +133,6 @@ export default function HomeProductsSection({ vh }) {
                 />
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* 오른쪽: 텍스트 + 버튼 */}
-        <div
-          className={`text-center lg:text-left space-y-6 max-w-lg transition-all duration-1000 delay-300 ${
-            isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
-          }`}
-        >
-          <div className="space-y-4">
-            <h2 className="text-xl md:text-3xl lg:text-5xl font-bold leading-tight tracking-tight">
-              세상에 없던 가구.
-              <br />
-              <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                할리우드에서
-              </span>
-            </h2>
-
-            <div className="w-16 h-1 bg-gradient-to-r from-gray-800 to-gray-400 mx-auto lg:mx-0 rounded-full" />
-          </div>
-
-          <p className="md:leading-7 md:text-base text-sm text-black/80">
-            공간에 가치를 더하는 가구를 만듭니다.
-            <br />
-            독창적인 디자인과 정밀한 제작 공법을 적용하여
-            <br />
-            차별화된 가구를 제작하고 있습니다.
-          </p>
-
-          <p className="text-xs text-gray-500">
-            · 모든 제품은 <strong>100% 핸드메이드</strong>로 제작됩니다.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
-            <button className="btn-primary w-full font-semibold">제품 보러가기</button>
-            {/* <button className="btn-sub">카탈로그 보기</button> */}
           </div>
         </div>
       </section>
