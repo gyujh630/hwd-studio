@@ -3,17 +3,22 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ProductList from "./ProductList";
 import Pagination from "@/components/common/Pagination";
-import { fetchProducts } from "@/lib/firebaseProduct";
+import { fetchProducts, fetchProductsCount } from "@/lib/firebaseProduct";
 
 export default function ProductsPage() {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const [products, setProducts] = useState([]);
-  const [lastDoc, setLastDoc] = useState(null);
+  const [lastDocs, setLastDocs] = useState([null]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
+
+  useEffect(() => {
+    fetchProductsCount().then(setTotalCount);
+  }, []);
 
   useEffect(() => {
     let ignore = false;
@@ -21,11 +26,15 @@ export default function ProductsPage() {
       setLoading(true);
       setError("");
       try {
-        const { products: fetched, lastDoc: newLastDoc } = await fetchProducts({ pageSize, lastDoc: page === 1 ? null : lastDoc });
+        const { products: fetched, lastDoc: newLastDoc } = await fetchProducts({ pageSize, lastDoc: lastDocs[page - 1] });
         if (!ignore) {
           setProducts(fetched);
-          setLastDoc(newLastDoc);
           setHasMore(fetched.length === pageSize);
+          setLastDocs(prev => {
+            const copy = [...prev];
+            copy[page] = newLastDoc;
+            return copy;
+          });
         }
       } catch (err) {
         setError("상품 목록을 불러오는 중 오류가 발생했습니다.");
@@ -42,6 +51,8 @@ export default function ProductsPage() {
     if (newPage < 1) return;
     setPage(newPage);
   };
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   return (
     <div>
@@ -61,7 +72,9 @@ export default function ProductsPage() {
         loading={loading}
         onItemClick={(product) => router.push(`/dashboard-hwd/products/${product.id}`)}
       />
-      <Pagination page={page} totalPages={hasMore ? page + 1 : page} onPageChange={handlePageChange} />
+      <div className="flex justify-center mt-8">
+        <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
+      </div>
     </div>
   );
 } 

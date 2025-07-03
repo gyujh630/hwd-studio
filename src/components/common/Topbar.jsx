@@ -20,11 +20,22 @@ export default function Topbar() {
 
   return (
     <header
-      className={`fixed top-4 ${isHome ? "right-0" : "w-full left-0"} z-50 px-4 md:px-6 flex justify-end`}
+      className={`fixed top-4 ${
+        isHome ? "right-0" : "w-full left-0"
+      } z-50 px-4 md:px-6 flex justify-end`}
     >
-      <div className={`hidden sm:flex w-full items-center ${!isHome ? "justify-between" : "justify-end"} bg-${isHome ? "gray-200/30" : "transparent"} backdrop-blur-md rounded-3xl px-6 py-3`}>
+      <div
+        className={`hidden sm:flex w-full items-center ${
+          !isHome ? "justify-between" : "justify-end"
+        } bg-${
+          isHome ? "backdrop-blur-md gray-200/30" : "transparent"
+        } rounded-3xl px-6 py-3`}
+      >
         {!isHome && (
-          <Link href="/" className="font-bold tracking-widest text-stone-900 cursor-pointer">
+          <Link
+            href="/"
+            className="font-bold tracking-widest text-stone-900 cursor-pointer"
+          >
             HOLLYWOOD STORE
           </Link>
         )}
@@ -40,9 +51,9 @@ export default function Topbar() {
                     ? "text-orange-700"
                     : "text-black"
                   : pathname.startsWith(item.href)
-                    ? "text-orange-700"
-                    : "text-black",
-                "hover:text-orange-700"
+                  ? "text-orange-700"
+                  : "text-black",
+                "hover:text-orange-700",
               ].join(" ")}
             >
               {item.label}
@@ -83,9 +94,9 @@ export default function Topbar() {
                       ? "text-orange-700"
                       : "text-gray-900"
                     : pathname.startsWith(item.href)
-                      ? "text-orange-700"
-                      : "text-gray-900",
-                  "hover:text-orange-700"
+                    ? "text-orange-700"
+                    : "text-gray-900",
+                  "hover:text-orange-700",
                 ].join(" ")}
                 onClick={() => setIsOpen(false)}
               >

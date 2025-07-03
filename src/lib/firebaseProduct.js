@@ -1,6 +1,7 @@
 import { db, storage, auth } from "./firebase";
-import { collection, addDoc, getDocs, doc, getDoc, updateDoc, deleteDoc, query, orderBy, limit, startAfter, Timestamp } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, getDoc, updateDoc, deleteDoc, query, orderBy, limit, startAfter, Timestamp, getCountFromServer } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 function checkAuthOrRedirect() {
   if (!auth.currentUser) {
@@ -117,4 +118,11 @@ export async function deleteProduct(id) {
   checkAuthOrRedirect();
   const docRef = doc(db, "products", id);
   await deleteDoc(docRef);
+}
+
+// 상품 총 개수 조회
+export async function fetchProductsCount() {
+  const q = query(collection(db, "products"));
+  const snapshot = await getCountFromServer(q);
+  return snapshot.data().count;
 } 

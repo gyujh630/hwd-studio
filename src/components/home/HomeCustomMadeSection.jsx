@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const images = ["/images/furnitures/carpenter1.png", "/images/furnitures/carpenter2.png"];
 
 export default function HomeProductsSection({ vh }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   const prev = () =>
     setCurrentIdx((prev) => (prev - 1 + images.length) % images.length);
@@ -63,7 +65,7 @@ export default function HomeProductsSection({ vh }) {
             <button className="btn-sub w-full font-semibold">
               제품 둘러보기
             </button>
-            <button className="btn-primary w-full font-semibold">
+            <button className="btn-primary w-full font-semibold" onClick={() => router.push("/custom-order-inquiry")}>
               제작 문의하기
             </button>
           </div>

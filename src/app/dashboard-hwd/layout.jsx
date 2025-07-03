@@ -54,7 +54,7 @@ export default function AdminLayout({ children }) {
             </nav>
           </div>
           <button
-            className="mt-8 btn-sub w-full"
+            className="mt-8 w-full text-left"
             onClick={handleLogout}
           >
             로그아웃
