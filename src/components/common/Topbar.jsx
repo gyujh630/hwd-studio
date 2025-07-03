@@ -24,7 +24,7 @@ export default function Topbar() {
     >
       <div className={`hidden sm:flex w-full items-center ${!isHome ? "justify-between" : "justify-end"} bg-gray-200/30 backdrop-blur-md rounded-3xl px-6 py-3`}>
         {!isHome && (
-          <span className="font-bold text-sm tracking-widest text-stone-900">
+          <span className="font-bold tracking-widest text-stone-900">
             HOLLYWOOD STORE
           </span>
         )}
@@ -33,7 +33,11 @@ export default function Topbar() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-black hover:text-orange-700 cursor-pointer"
+              className={[
+                "text-sm cursor-pointer",
+                pathname === item.href ? "text-orange-700" : "text-black",
+                "hover:text-orange-700"
+              ].join(" ")}
             >
               {item.label}
             </Link>
@@ -66,7 +70,11 @@ export default function Topbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="ml-4 block text-gray-900 hover:text-orange-700 cursor-pointer"
+                className={[
+                  "ml-4 block cursor-pointer",
+                  pathname === item.href ? "text-orange-700" : "text-gray-900",
+                  "hover:text-orange-700"
+                ].join(" ")}
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}
