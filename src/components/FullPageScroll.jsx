@@ -58,7 +58,6 @@ export default function FullPageScroll() {
         className="footer-section"
         style={{
           minHeight: "280px",
-          height: "280px",
           scrollSnapAlign: "start",
           scrollSnapStop: "always",
           backgroundColor: "#f9f9f9",
