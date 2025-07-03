@@ -5,16 +5,17 @@ import * as THREE from "three";
 import { SRGBColorSpace } from "three"; // ✅ 추가
 import { setupLights } from "@/lib/three/setupLights";
 import { createGround } from "@/lib/three/createGround";
-import { loadWoodTextures } from "@/lib/three/loadTextures";
+import { loadWoodTexturesAsync } from "@/lib/three/loadTextures";
 import {
   createMaterialForBox,
   createSideMaterialForBox,
 } from "@/lib/three/createMaterials";
 
-export default function RotatingBoxesScene() {
+export default function RotatingBoxesScene({ onLoaded }) {
   const mountRef = useRef(null);
 
   useEffect(() => {
+    let isMounted = true;
     const container = mountRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -29,11 +30,7 @@ export default function RotatingBoxesScene() {
     renderer.setSize(width, height);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-    // ✅ 수정된 부분
     renderer.outputColorSpace = SRGBColorSpace;
-
-    // renderer.toneMapping = THREE.LinearToneMapping;
     renderer.toneMappingExposure = 1.2;
 
     container.innerHTML = "";
@@ -42,100 +39,102 @@ export default function RotatingBoxesScene() {
     setupLights(scene);
     scene.add(createGround());
 
-    const { colorMap, normalMap, roughnessMap } = loadWoodTextures();
+    let handleResize;
+    loadWoodTexturesAsync().then(({ colorMap, normalMap, roughnessMap }) => {
+      if (!isMounted) return;
+      const group = new THREE.Group();
+      scene.add(group);
+      const total = 18;
+      const boxSize = 0.7;
+      const boxHeight = 4.4;
+      const boxes = [];
 
-    const group = new THREE.Group();
-    scene.add(group);
-    const total = 18;
-    const boxSize = 0.7;
-    const boxHeight = 4.4;
-    const boxes = [];
+      for (let i = 0; i < total; i++) {
+        const topBottomMaterial = createMaterialForBox(
+          i,
+          total,
+          colorMap,
+          normalMap,
+          roughnessMap
+        );
+        const sideMaterial = createSideMaterialForBox(
+          i,
+          total,
+          colorMap,
+          normalMap,
+          roughnessMap
+        );
+        const materials = [
+          sideMaterial,
+          sideMaterial.clone(),
+          topBottomMaterial,
+          topBottomMaterial.clone(),
+          sideMaterial.clone(),
+          sideMaterial.clone(),
+        ];
+        const geometry = new THREE.BoxGeometry(boxSize, boxHeight, boxSize);
+        const mesh = new THREE.Mesh(geometry, materials);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
 
-    for (let i = 0; i < total; i++) {
-      const topBottomMaterial = createMaterialForBox(
-        i,
-        total,
-        colorMap,
-        normalMap,
-        roughnessMap
-      );
-      const sideMaterial = createSideMaterialForBox(
-        i,
-        total,
-        colorMap,
-        normalMap,
-        roughnessMap
-      );
+        mesh.position.x = (i - total / 2) * boxSize + boxSize / 2;
+        const offsetRatio = i / (total - 1);
+        mesh.rotation.x = THREE.MathUtils.degToRad(offsetRatio * 180);
+        group.add(mesh);
+        boxes.push(mesh);
+      }
 
-      const materials = [
-        sideMaterial,
-        sideMaterial.clone(),
-        topBottomMaterial,
-        topBottomMaterial.clone(),
-        sideMaterial.clone(),
-        sideMaterial.clone(),
-      ];
+      let rotationSpeed = 0.0015;
+      const mouse = { x: 0, y: 0 };
 
-      const geometry = new THREE.BoxGeometry(boxSize, boxHeight, boxSize);
-      const mesh = new THREE.Mesh(geometry, materials);
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
+      const onMouseMove = (event) => {
+        const rect = renderer.domElement.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 4 - 1;
+        mouse.y = ((event.clientY - rect.top) / rect.height) * 4 + 1;
+      };
+      renderer.domElement.addEventListener("mousemove", onMouseMove);
 
-      mesh.position.x = (i - total / 2) * boxSize + boxSize / 2;
-      const offsetRatio = i / (total - 1);
-      mesh.rotation.x = THREE.MathUtils.degToRad(offsetRatio * 180);
-      group.add(mesh);
-      boxes.push(mesh);
-    }
+      handleResize = () => {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        camera.position.set(0, 6, window.innerWidth <= 560 ? 11 : 6);
+        camera.lookAt(0, 0, 0);
+      };
+      window.addEventListener("resize", handleResize);
 
-    let rotationSpeed = 0.0015;
-    const mouse = { x: 0, y: 0 };
+      const baseY = 6;
+      const baseZ = window.innerWidth <= 560 ? 11 : 6;
 
-    const onMouseMove = (event) => {
-      const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((event.clientX - rect.left) / rect.width) * 4 - 1;
-      mouse.y = ((event.clientY - rect.top) / rect.height) * 4 + 1;
-    };
-    renderer.domElement.addEventListener("mousemove", onMouseMove);
+      const animate = () => {
+        requestAnimationFrame(animate);
 
-    const handleResize = () => {
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      renderer.setSize(width, height);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      camera.position.set(0, 6, window.innerWidth <= 560 ? 11 : 6);
-      camera.lookAt(0, 0, 0);
-    };
-    window.addEventListener("resize", handleResize);
+        group.rotation.x += rotationSpeed;
+        group.rotation.y += rotationSpeed;
+        group.rotation.z += rotationSpeed;
 
-    const baseY = 6;
-    const baseZ = window.innerWidth <= 560 ? 11 : 6;
+        const targetX = -mouse.x * 1.5;
+        const targetY = baseY + mouse.y * 0.5;
 
-    const animate = () => {
-      requestAnimationFrame(animate);
+        camera.position.x += (targetX - camera.position.x) * 0.03;
+        camera.position.y += (targetY - camera.position.y) * 0.03;
+        camera.position.z = baseZ;
 
-      group.rotation.x += rotationSpeed;
-      group.rotation.y += rotationSpeed;
-      group.rotation.z += rotationSpeed;
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+      };
+      animate();
 
-      const targetX = -mouse.x * 1.5;
-      const targetY = baseY + mouse.y * 0.5;
-
-      camera.position.x += (targetX - camera.position.x) * 0.03;
-      camera.position.y += (targetY - camera.position.y) * 0.03;
-      camera.position.z = baseZ;
-
-      camera.lookAt(0, 0, 0);
-      renderer.render(scene, camera);
-    };
-    animate();
+      if (onLoaded) onLoaded();
+    });
 
     return () => {
-      renderer.domElement.removeEventListener("mousemove", onMouseMove);
+      isMounted = false;
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [onLoaded]);
 
   return (
     <div

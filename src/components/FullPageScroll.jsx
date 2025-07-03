@@ -35,6 +35,7 @@ export default function FullPageScroll() {
         style={{
           height: vh,
           scrollSnapAlign: "start",
+          scrollSnapStop: "always",
         }}
       >
         <HomeRotatingSection vh={vh} />
@@ -46,18 +47,20 @@ export default function FullPageScroll() {
         style={{
           height: vh,
           scrollSnapAlign: "start",
+          scrollSnapStop: "always",
         }}
       >
         <HomeProductsSection vh={vh} />
       </div>
 
-      {/* FOOTER (짧은 높이지만 scrollSnap 포함) */}
+      {/* FOOTER */}
       <div
         className="footer-section"
         style={{
           minHeight: "280px",
           height: "280px",
           scrollSnapAlign: "start",
+          scrollSnapStop: "always",
           backgroundColor: "#f9f9f9",
         }}
       >

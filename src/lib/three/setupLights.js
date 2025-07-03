@@ -8,7 +8,6 @@ export function setupLights(scene) {
   // ☀️ 중립적인 색감의 방향광
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5); // 살짝 밝게
   directionalLight.color.setRGB(1.0, 0.95, 0.88); // 너무 노랗지 않게 중간 톤
-
   directionalLight.position.set(5, 8, 6);
   directionalLight.castShadow = true;
 

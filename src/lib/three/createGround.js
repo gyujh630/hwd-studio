@@ -8,6 +8,5 @@ export function createGround() {
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = -1;
   ground.receiveShadow = true;
-
   return ground;
 }

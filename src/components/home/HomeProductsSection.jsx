@@ -26,7 +26,6 @@ export default function HomeProductsSection({ vh }) {
       >
         {/* 배경 장식 */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-
         {/* 왼쪽: 이미지 슬라이더 */}
         <div
           className={`relative transition-all duration-1000 ${
@@ -97,7 +96,9 @@ export default function HomeProductsSection({ vh }) {
         {/* 오른쪽: 텍스트 + 버튼 */}
         <div
           className={`text-center lg:text-left space-y-6 max-w-lg transition-all duration-1000 delay-300 ${
-            isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
+            isVisible
+              ? "translate-x-0 opacity-100"
+              : "translate-x-20 opacity-0"
           }`}
         >
           <div className="space-y-4">

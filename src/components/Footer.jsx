@@ -1,16 +1,15 @@
 export default function Footer() {
     return (
       <div className="w-full bg-stone-900 text-stone-100 py-12 px-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="mx-auto">
           {/* 상호명 */}
           <div className="text-center mb-8">
             <h2 className="text-xl font-light tracking-wider">할리우드스토어</h2>
             <div className="w-12 h-px bg-stone-500 mx-auto mt-2"></div>
           </div>
   
-          {/* 메인 정보 - 세로선으로 구분 */}
-          <div className="flex justify-between items-start text-xs text-stone-300 space-x-8">
-            
+          {/* 메인 정보 - 반응형 flex 레이아웃 */}
+          <div className="flex flex-col md:flex-row justify-between items-stretch text-xs text-stone-300 space-y-8 md:space-y-0 md:space-x-8">
             {/* 첫 번째 섹션 - 사업자 정보 */}
             <div className="flex-1 text-left">
               <div className="space-y-2">
@@ -20,8 +19,8 @@ export default function Footer() {
               </div>
             </div>
   
-            {/* 세로 구분선 */}
-            <div className="w-px h-16 bg-stone-700"></div>
+            {/* 세로 구분선 - md 이상에서만 보이기 */}
+            <div className="hidden md:block w-px h-16 bg-stone-700"></div>
   
             {/* 두 번째 섹션 - 연락처 */}
             <div className="flex-1 text-center">
@@ -34,8 +33,8 @@ export default function Footer() {
               </div>
             </div>
   
-            {/* 세로 구분선 */}
-            <div className="w-px h-16 bg-stone-700"></div>
+            {/* 세로 구분선 - md 이상에서만 보이기 */}
+            <div className="hidden md:block w-px h-16 bg-stone-700"></div>
   
             {/* 세 번째 섹션 - 소셜 미디어 */}
             <div className="flex-1 text-right">
