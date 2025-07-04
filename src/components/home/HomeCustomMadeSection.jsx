@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ImageCarousel from "@/components/common/ImageCarousel";
 
 const images = ["/images/furnitures/carpenter1.png", "/images/furnitures/carpenter2.png"];
 
@@ -61,7 +62,7 @@ export default function HomeProductsSection({ vh }) {
             <br />
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
+          <div className="flex flex-row justify-center lg:justify-start gap-4 pt-4">
             <button className="btn-sub w-full font-semibold">
               제품 둘러보기
             </button>
@@ -77,65 +78,11 @@ export default function HomeProductsSection({ vh }) {
             isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
           } order-1 lg:order-2`}
         >
-          <div className="relative w-88 h-72 md:w-120 md:h-92 group">
-            {/* 메인 이미지 */}
-            <div className="relative w-full h-full bg-gradient-to-br from-gray-50/50 to-gray-200/50 rounded-2xl shadow-2xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent z-10" />
-
-              {/* 이미지 컨테이너 - 슬라이드 효과 */}
-              <div
-                className="flex transition-transform duration-700 ease-out w-full h-full"
-                style={{ transform: `translateX(-${currentIdx * 100}%)` }}
-              >
-                {images.map((src, idx) => (
-                  <div
-                    key={idx}
-                    className="w-full h-full flex-shrink-0 relative"
-                  >
-                    <Image
-                      src={src}
-                      alt={`Furniture ${idx}`}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="200px"
-                    />
-                    {/* 어두운 필터 레이어 */}
-                    <div className="absolute inset-0 bg-black/30 sm:bg-black/30 z-10 pointer-events-none" />
-                  </div>
-                ))}
-              </div>
-
-              {/* 좌우 화살표 - 사진 안에 위치 */}
-              <button
-                onClick={prev}
-                className="absolute top-1/2 left-4 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg rounded-full flex items-center justify-center transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100 opacity-100 hover:scale-110 z-20"
-              >
-                <ChevronLeft className="w-5 h-5 text-gray-700" />
-              </button>
-
-              <button
-                onClick={next}
-                className="absolute top-1/2 right-4 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg rounded-full flex items-center justify-center transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100 opacity-100 hover:scale-110 z-20"
-              >
-                <ChevronRight className="w-5 h-5 text-gray-700" />
-              </button>
-            </div>
-
-            {/* 인디케이터 */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-              {images.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentIdx(idx)}
-                  className={`w-2 h-2 rounded-full transition-all duration-500 ${
-                    idx === currentIdx
-                      ? "bg-gray-800 w-6"
-                      : "bg-gray-400 hover:bg-gray-600"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+          <ImageCarousel
+            images={images}
+            imageClassName="object-cover"
+            overlay={() => <div className="absolute inset-0 bg-black/30 sm:bg-black/30 z-10 pointer-events-none" />}
+          />
         </div>
       </section>
 

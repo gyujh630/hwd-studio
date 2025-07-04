@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-stone-900 text-stone-200 flex flex-col min-h-[280px] pt-8 pb-0 px-4 md:px-12">
+    <footer className="w-full bg-stone-900 text-stone-200 flex flex-col min-h-[280px] pt-8 sm:pb-0 pb-20 px-4 md:px-12">
       <div className="flex flex-col md:flex-row md:items-start md:justify-between w-full max-w-6xl mx-auto flex-1">
         {/* 브랜드명 */}
         <div className="mb-8 md:mb-0 md:mr-12 min-w-[140px]">
