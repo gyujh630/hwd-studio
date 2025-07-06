@@ -29,7 +29,7 @@ export default function Topbar() {
             href="/"
             className="font-bold tracking-widest text-stone-900 cursor-pointer"
           >
-            HOLLYWOOD STORE
+            HOLLYWOOD STUDIO
           </Link>
         </div>
         

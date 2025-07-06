@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 
+
+
 export default function AdminLayout({ children }) {
   // 클라이언트 컴포넌트로 동작하도록 use client 선언
   // 로그아웃 버튼 클릭 시 signOut 및 라우팅

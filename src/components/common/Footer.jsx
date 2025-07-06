@@ -7,7 +7,7 @@ export default function Footer() {
         {/* 브랜드명 */}
         <div className="mb-8 md:mb-0 md:mr-12 min-w-[140px]">
           <span className="font-bold text-sm tracking-widest text-stone-100">
-            HOLLYWOOD STORE
+            HOLLYWOOD STUDIO
           </span>
         </div>
         {/* 4개 섹션 */}
@@ -86,7 +86,7 @@ export default function Footer() {
       {/* 하단 고정 문구 */}
       <div className="w-full text-center py-6 flex-shrink-0">
         <p className="text-xs text-stone-500">
-          © 2025 Hollywood Store. All rights reserved.
+          © 2025 Hollywood Studio. All rights reserved.
         </p>
       </div>
     </footer>
