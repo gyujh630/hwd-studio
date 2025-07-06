@@ -88,7 +88,7 @@ export default function CustomOrderInquiryPage() {
     form.captcha.trim();
 
   return (
-    <div className="w-full mx-auto pt-32 pb-12 px-4 overflow-auto metallic-base-bg">
+    <div className="w-full mx-auto pt-4 md:pt-32 pb-12 px-4 overflow-auto metallic-base-bg">
       <div className="max-w-xl mx-auto rounded-2xl p-6 sm:p-8">
         <h1 className="text-2xl font-bold mb-6 text-center">주문제작 문의</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -170,7 +170,7 @@ export default function CustomOrderInquiryPage() {
           <div>
             <label className="block font-semibold mb-1">첨부파일1</label>
             <div className="flex items-center gap-3">
-              <button type="button" onClick={() => fileRefs[0].current.click()} className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-inner hover:bg-gray-200 transition text-sm font-medium cursor-pointer">
+              <button type="button" onClick={() => fileRefs[0].current.click()} className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 text-sm font-medium cursor-pointer">
                 파일 선택
               </button>
               <span className="text-xs text-gray-600 truncate max-w-[160px]">
@@ -188,7 +188,7 @@ export default function CustomOrderInquiryPage() {
           <div>
             <label className="block font-semibold mb-1">첨부파일2</label>
             <div className="flex items-center gap-3">
-              <button type="button" onClick={() => fileRefs[1].current.click()} className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-inner hover:bg-gray-200 transition text-sm font-medium cursor-pointer">
+              <button type="button" onClick={() => fileRefs[1].current.click()} className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 text-sm font-medium cursor-pointer">
                 파일 선택
               </button>
               <span className="text-xs text-gray-600 truncate max-w-[160px]">

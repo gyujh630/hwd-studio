@@ -31,7 +31,7 @@ export default function HomeRotatingSection({ vh }) {
       </div>
       <div className={`z-10 text-center transition-all duration-700 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}> 
         <h1 className="text-6xl md:text-8xl font-extrabold text-orange-700 tracking-tight">
-          HOLLYWOOD STORE
+          HOLLYWOOD STUDIO
         </h1>
         <p className="mt-3 text-xs md:text-2xl font-bold text-orange-700 tracking-wide uppercase">
           Woodwork • Premium Furniture • Pop-up Interiors

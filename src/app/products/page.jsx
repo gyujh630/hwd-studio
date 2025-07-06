@@ -65,7 +65,7 @@ export default function ProductsPage() {
 
   return (
     <div className="w-full min-h-screen mx-auto px-12 py-24 metallic-base-bg overflow-auto">
-      <div className="w-full flex justify-center my-4 min-h-[2.5rem]">
+      <div className="flex justify-center my-4 min-h-[2.5rem]">
         {loading ? (
           <span className="animate-spin inline-block w-6 h-6 border-4 border-gray-300 border-t-gray-900 rounded-full" />
         ) : (
@@ -74,7 +74,7 @@ export default function ProductsPage() {
           </h1>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="mx-auto max-w-[1120px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {pagedProducts.map((product) => {
           const thumbnail =
             Array.isArray(product.photos) && product.photos.length > 0
@@ -84,7 +84,7 @@ export default function ProductsPage() {
           return (
             <div
               key={product.id}
-              className="p-6 flex flex-col gap-2 group"
+              className="p-2 flex flex-col gap-2 group"
             >
               {thumbnail && (
                 <div

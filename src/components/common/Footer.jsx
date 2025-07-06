@@ -18,7 +18,7 @@ export default function Footer() {
               사업자 정보
             </h3>
             <ul className="space-y-1 text-xs text-stone-300">
-              <li>사업자등록번호 123-45-67890</li>
+              <li>사업자등록번호 135-52-00644</li>
               <li>대표자 정혁</li>
             </ul>
           </div>
@@ -28,9 +28,9 @@ export default function Footer() {
               고객센터
             </h3>
             <ul className="space-y-1 text-xs text-stone-300">
-              <li>서울시 강남구 테헤란로 123, 2층</li>
-              <li>010-1234-5678</li>
-              <li>info@hollywoodstore.co.kr</li>
+              <li>경기도 포천시 어룡동 157-2, 1층</li>
+              <li>010-8714-8384</li>
+              <li>roaa8384@naver.com</li>
               <li className="pt-3 text-stone-200 font-semibold mt-1">
                 작업 중 전화연결이 어려우니
               </li>
@@ -45,7 +45,7 @@ export default function Footer() {
               입금 계좌
             </h3>
             <ul className="space-y-1 text-xs text-stone-300">
-              <li>국민은행 123456-78-901234</li>
+              <li>국민은행 943202-00-440440</li>
               <li>예금주: 정혁</li>
             </ul>
           </div>
@@ -55,7 +55,7 @@ export default function Footer() {
             <div className="flex space-x-4">
               {/* 인스타그램 */}
               <a
-                href="#"
+                href="https://www.instagram.com/hollywoodstore0_0/"
                 target="_blank"
                 className="hover:opacity-80 transition-opacity"
                 aria-label="인스타그램"

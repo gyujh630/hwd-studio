@@ -70,8 +70,8 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">{isEdit ? "상품 수정" : "상품 등록"}</h2>
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
+      <h2 className="text-2xl text-center font-semibold mb-6">{isEdit ? "상품 수정" : "상품 등록"}</h2>
       <div>
         <label className="block font-semibold mb-1">상품명 *</label>
         <input className="input bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300 w-full px-3 py-2 rounded"
@@ -94,7 +94,7 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
             <input className="input flex-1 bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300 px-3 py-2 rounded"
               value={size} onChange={e => handleSizeChange(idx, e.target.value)} required />
             {sizes.length > 1 && (
-              <button type="button" onClick={() => removeSize(idx)} className="admin-btn-sub text-xs px-2 py-1">삭제</button>
+              <button type="button" onClick={() => removeSize(idx)} className="admin-btn-sub text-sm text-xs px-2 py-1">삭제</button>
             )}
           </div>
         ))}
@@ -112,10 +112,10 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
         />
         <button
           type="button"
-          className="admin-btn mb-2"
+          className="admin-btn my-2"
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
         >
-          이미지 파일 선택/추가
+          이미지 파일 선택 / 추가
         </button>
         <div className="grid grid-cols-2 gap-4 mt-4">
           {photos.map((photo, idx) => (
@@ -155,7 +155,7 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
                   required
                 />
               </div>
-              <button type="button" onClick={() => handlePhotoRemove(idx)} className="admin-btn text-xs px-2 py-1 mt-2">삭제</button>
+              <button type="button" onClick={() => handlePhotoRemove(idx)} className="admin-btn-sub text-xs px-2 py-1 mt-2">삭제</button>
             </div>
           ))}
         </div>

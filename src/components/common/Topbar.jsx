@@ -26,9 +26,9 @@ export default function Topbar() {
     >
       <div
         className={`hidden sm:flex w-full items-center ${
-          !isHome ? "justify-between" : "justify-end backdrop-blur-md"
+          !isHome ? "justify-between backdrop-blur-md" : "justify-end backdrop-blur-md"
         } bg-${
-          isHome ? "gray-200/30" : "transparent"
+          isHome ? "bg-gray-200/30" : "transparent"
         } rounded-3xl px-6 py-3`}
       >
         {!isHome && (
@@ -71,7 +71,7 @@ export default function Topbar() {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-white/60 backdrop-blur-lg z-50 flex flex-col p-6">
+        <div className="fixed inset-0 bg-gray-200/20 backdrop-blur-lg z-50 flex flex-col p-6">
           <div className="flex justify-end">
             <button
               onClick={() => setIsOpen(false)}

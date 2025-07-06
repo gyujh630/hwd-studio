@@ -40,6 +40,8 @@ export default function RotatingBoxesScene({ onLoaded }) {
     scene.add(createGround());
 
     let handleResize;
+    let animationId;
+    let cleanupFns = [];
     loadWoodTexturesAsync().then(({ colorMap, normalMap, roughnessMap }) => {
       if (!isMounted) return;
       const group = new THREE.Group();
@@ -93,6 +95,7 @@ export default function RotatingBoxesScene({ onLoaded }) {
         mouse.y = ((event.clientY - rect.top) / rect.height) * 4 + 1;
       };
       renderer.domElement.addEventListener("mousemove", onMouseMove);
+      cleanupFns.push(() => renderer.domElement.removeEventListener("mousemove", onMouseMove));
 
       handleResize = () => {
         const width = container.clientWidth;
@@ -104,12 +107,13 @@ export default function RotatingBoxesScene({ onLoaded }) {
         camera.lookAt(0, 0, 0);
       };
       window.addEventListener("resize", handleResize);
+      cleanupFns.push(() => window.removeEventListener("resize", handleResize));
 
       const baseY = 6;
       const baseZ = window.innerWidth <= 560 ? 11 : 6;
 
       const animate = () => {
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
 
         group.rotation.x += rotationSpeed;
         group.rotation.y += rotationSpeed;
@@ -128,11 +132,36 @@ export default function RotatingBoxesScene({ onLoaded }) {
       animate();
 
       if (onLoaded) onLoaded();
+
+      // Clean-up function for Three.js resources
+      cleanupFns.push(() => {
+        if (animationId) cancelAnimationFrame(animationId);
+        // Dispose all geometries, materials, and textures
+        group.traverse((obj) => {
+          if (obj.isMesh) {
+            if (obj.geometry) obj.geometry.dispose();
+            if (Array.isArray(obj.material)) {
+              obj.material.forEach((mat) => {
+                if (mat.map) mat.map.dispose();
+                if (mat.normalMap) mat.normalMap.dispose();
+                if (mat.roughnessMap) mat.roughnessMap.dispose();
+                mat.dispose && mat.dispose();
+              });
+            } else if (obj.material) {
+              if (obj.material.map) obj.material.map.dispose();
+              if (obj.material.normalMap) obj.material.normalMap.dispose();
+              if (obj.material.roughnessMap) obj.material.roughnessMap.dispose();
+              obj.material.dispose && obj.material.dispose();
+            }
+          }
+        });
+        renderer.dispose();
+      });
     });
 
     return () => {
       isMounted = false;
-      window.removeEventListener("resize", handleResize);
+      cleanupFns.forEach((fn) => fn());
     };
   }, [onLoaded]);
 
