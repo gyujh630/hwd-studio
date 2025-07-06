@@ -9,57 +9,57 @@ const MENU_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
   { label: "Custom Made", href: "/custom-made" },
+  { label: "Posts", href: "/posts" },
 ];
 
 export default function Topbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
 
   if (pathname?.startsWith("/dashboard-hwd")) return null;
 
   return (
     <header
-      className={`fixed top-4 ${
-        isHome ? "right-0" : "w-full left-0"
-      } z-50 px-4 md:px-6 flex justify-end`}
+      className="fixed top-4 w-full left-0 z-50 px-4 md:px-6 flex justify-between"
     >
-      <div
-        className={`hidden sm:flex w-full items-center ${
-          !isHome ? "justify-between background-blur-md" : "justify-end backdrop-blur-md"
-        } bg-${
-          isHome ? "gray-200/20" : "transparent"
-        } rounded-3xl px-6 py-3`}
-      >
-        {!isHome && (
+      <div className="hidden sm:flex w-full items-center justify-between">
+        {/* 좌측 로고 부분 */}
+        <div className="backdrop-blur-md bg-gray-200/20 rounded-3xl px-6 py-3">
           <Link
             href="/"
             className="font-bold tracking-widest text-stone-900 cursor-pointer"
           >
             HOLLYWOOD STORE
           </Link>
-        )}
-        <nav className="flex space-x-10">
-          {MENU_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={[
-                "text-sm cursor-pointer",
-                item.href === "/"
-                  ? pathname === "/"
+        </div>
+        
+        {/* 중간 투명 영역 */}
+        <div className="flex-1"></div>
+        
+        {/* 우측 메뉴 부분 */}
+        <div className="backdrop-blur-md bg-gray-200/20 rounded-3xl px-6 py-3">
+          <nav className="flex space-x-10">
+            {MENU_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={[
+                  "text-sm cursor-pointer",
+                  item.href === "/"
+                    ? pathname === "/"
+                      ? "text-orange-700"
+                      : "text-black"
+                    : pathname.startsWith(item.href)
                     ? "text-orange-700"
-                    : "text-black"
-                  : pathname.startsWith(item.href)
-                  ? "text-orange-700"
-                  : "text-black",
-                "hover:text-orange-700",
-              ].join(" ")}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+                    : "text-black",
+                  "hover:text-orange-700",
+                ].join(" ")}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </div>
 
       <button

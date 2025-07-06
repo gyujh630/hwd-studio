@@ -34,3 +34,17 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Instagram Integration
+
+This project includes Instagram integration for displaying posts. To enable real Instagram data:
+
+1. Create a Facebook Developer account and app
+2. Set up Instagram Basic Display API
+3. Add your Instagram Access Token to environment variables:
+
+```bash
+INSTAGRAM_ACCESS_TOKEN=your_access_token_here
+```
+
+The current implementation uses mock data. To switch to real Instagram data, uncomment the API call in `src/app/api/instagram/route.js`.
