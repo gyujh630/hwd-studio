@@ -18,9 +18,7 @@ export default function Topbar() {
   if (pathname?.startsWith("/dashboard-hwd")) return null;
 
   return (
-    <header
-      className="fixed top-4 w-full left-0 z-50 px-4 md:px-6 flex justify-between"
-    >
+  <header className="fixed top-4 w-full left-0 z-50 px-4 md:px-6 flex justify-end">
       <div className="hidden sm:flex w-full items-center justify-between">
         {/* 좌측 로고 부분 */}
         <div className="backdrop-blur-md bg-gray-200/20 rounded-3xl px-6 py-3">
