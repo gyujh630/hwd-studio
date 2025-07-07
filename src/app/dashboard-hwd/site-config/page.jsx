@@ -136,16 +136,16 @@ function SectionEditor({ sectionName, sectionLabel }) {
             <div className="text-xs text-gray-400 mt-1">사진은 5장까지 첨부 가능합니다.</div>
             <div className="grid grid-cols-2 gap-4 mt-4">
               {images.map((img, idx) => (
-                <div key={idx} className="relative rounded p-2 bg-gray-100 flex flex-col items-center">
+                <div key={idx} className="relative rounded p-2 bg-white border border-gray-200 flex flex-col items-center">
                   {img.preview || img.url ? (
                     <div style={{ width: 150, height: 120, background: '#eee', borderRadius: 4, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <Image src={img.preview || img.url} alt="미리보기" width={150} height={120} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
                     </div>
                   ) : null}
-                  <div className="flex gap-0.5 mt-2">
-                    <button type="button" className="admin-btn-sub px-0.5 py-0 text-[10px] font-light" onClick={() => moveImage(idx, idx - 1)} disabled={idx === 0 || saving}>↑</button>
-                    <button type="button" className="admin-btn-sub px-0.5 py-0 text-[10px] font-light" onClick={() => moveImage(idx, idx + 1)} disabled={idx === images.length - 1 || saving}>↓</button>
-                    <button type="button" className="admin-btn-sub px-0.5 py-0 text-[10px] font-light" onClick={() => handleImageRemove(idx)} disabled={saving}>삭제</button>
+                  <div className="flex gap-2 mt-2">
+                    <button type="button" className="bg-gray-200 px-2 py-1 text-xs font-light cursor-pointer" onClick={() => moveImage(idx, idx - 1)} disabled={idx === 0 || saving}>↑</button>
+                    <button type="button" className="bg-gray-200 px-2 py-1 text-xs font-light cursor-pointer" onClick={() => moveImage(idx, idx + 1)} disabled={idx === images.length - 1 || saving}>↓</button>
+                    <button type="button" className="bg-gray-200 px-2 py-1 text-xs font-light cursor-pointer" onClick={() => handleImageRemove(idx)} disabled={saving}>삭제</button>
                   </div>
                 </div>
               ))}

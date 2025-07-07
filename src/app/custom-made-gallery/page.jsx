@@ -3,7 +3,7 @@ import CustomMadeGalleryClientSection from "./CustomMadeGalleryClientSection";
 import Footer from "@/components/common/Footer";
 
 export const metadata = {
-  title: "Custom Made Gallery | HOLLYWOOD STUDIO",
+  title: "주문제작 상품 | HOLLYWOOD STUDIO",
   description: "할리우드의 주문제작 상품들을 소개합니다.",
   keywords: "주문제작, 수제가구, 갤러리, 할리우드, 맞춤가구, 원목가구, 프리미엄 가구, 인테리어, 가구 추천, 주문제작 사례"
 };
