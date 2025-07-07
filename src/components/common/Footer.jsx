@@ -30,7 +30,7 @@ export default function Footer() {
             <ul className="space-y-1 text-xs text-stone-300">
               <li>경기도 포천시 어룡동 157-2, 1층</li>
               <li>010-8714-8384</li>
-              <li>roaa8384@naver.com</li>
+              <li>hollywood99u@gmail.com</li>
               <li className="pt-3 text-stone-200 font-semibold mt-1">
                 작업 중 전화연결이 어려우니
               </li>

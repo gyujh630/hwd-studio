@@ -9,7 +9,6 @@ const MENU_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
   { label: "Custom Made", href: "/custom-made" },
-  { label: "Posts", href: "/posts" },
 ];
 
 export default function Topbar() {
