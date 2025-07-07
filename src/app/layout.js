@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Topbar from "@/components/common/Topbar"; 
+import Topbar from "@/components/common/Topbar";
+import KakaoConsultButton from "@/components/common/KakaoConsultButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       >
         <Topbar />
         {children}
+        <KakaoConsultButton />
       </body>
     </html>
   );

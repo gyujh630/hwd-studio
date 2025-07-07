@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ImageCarousel from "@/components/common/ImageCarousel";
+import CustomMadeInquiryButton from "@/components/common/CustomMadeInquiryButton";
 
 const images = ["/images/furnitures/carpenter1.png", "/images/furnitures/carpenter2.png"];
 
@@ -66,9 +67,7 @@ export default function HomeProductsSection({ vh }) {
             <button className="btn-sub w-full font-semibold">
               제품 둘러보기
             </button>
-            <button className="btn-primary w-full font-semibold" onClick={() => router.push("/custom-order-inquiry")}>
-              제작 문의하기
-            </button>
+            <CustomMadeInquiryButton />
           </div>
         </div>
 

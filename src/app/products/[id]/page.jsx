@@ -4,6 +4,8 @@ import { useParams, useRouter } from "next/navigation";
 import { fetchProductById } from "@/lib/firebaseProduct";
 import { ArrowLeft } from "lucide-react";
 import Footer from "@/components/common/Footer";
+import IdusBuyButton from "@/components/common/IdusBuyButton";
+import KakaoButtonForProductDetail from "@/components/common/KakaoButtonForProductDetail";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -165,8 +167,8 @@ export default function ProductDetailPage() {
               </div>
 
               {/* 우측: 상품 정보 */}
-              <div className="flex flex-col h-full min-h-[400px] max-h-[600px] lg:max-h-[700px] px-2 lg:px-0">
-                <div className="flex flex-col justify-start space-y-6 overflow-auto pr-1">
+              <div className="flex flex-col h-full max-h-[600px] lg:max-h-[700px] px-2 lg:px-0">
+                <div className="flex flex-col justify-start space-y-6 pr-1">
                   {/* 제품명 & 가격 */}
                   <div className="space-y-3">
                     <h1 className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight">
@@ -198,40 +200,38 @@ export default function ProductDetailPage() {
                     </div>
                   )}
 
-                  {/* 상품 설명 */}
-                  <div className="space-y-2 flex flex-col md:min-h-32 mb-8">
-                    <h3 className="text-sm font-semibold text-gray-900">
-                      상품 설명
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line flex-1">
-                      {description}
-                    </p>
-                  </div>
+                  {/* 색상 옵션 */}
+                  {Array.isArray(photos) && photos.length > 0 && (
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-semibold text-gray-900">
+                        색상 옵션
+                      </h3>
+                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-1">
+                        {photos.map((photo, idx) => (
+                          <div
+                            key={idx}
+                            className="py-1 px-2 text-center text-sm font-medium border border-gray-200 bg-white text-gray-500 rounded-sm"
+                          >
+                              {photo.colorName}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-
-                {idusUrl && (
-                  <a
-                    href={idusUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative w-full inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform md:hover:scale-105 hover:from-orange-600 hover:to-orange-800"
-                  >
-                    <svg
-                      className="w-4 h-4 mr-2 group-hover:animate-pulse"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                      />
-                    </svg>
-                    아이디어스에서 구매하기
-                  </a>
-                )}
+                {/* 구매/문의 버튼 영역 - overflow 영향 없는 flex-col 바로 아래 */}
+                <div className="flex flex-col gap-3 mb-6 z-50 mt-6">
+                  <KakaoButtonForProductDetail />
+                  <IdusBuyButton idusUrl={idusUrl} />
+                </div>
+              </div>
+            </div>
+            <div className="w-full max-w-4xl mx-auto px-4 mt-8">
+              <div className="space-y-2 flex flex-col mb-8">
+                <h3 className="text-sm font-semibold text-gray-900">상품 설명</h3>
+                <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line flex-1">
+                  {description}
+                </p>
               </div>
             </div>
           </div>
