@@ -31,12 +31,22 @@ export default function CustomMadeGalleryPage() {
     fetchGallery();
   }, []);
 
+  // ESC 키로 모달 닫기
+  useEffect(() => {
+    if (!modal) return;
+    function handleKeyDown(e) {
+      if (e.key === "Escape") setModal(null);
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [modal]);
+
   return (
     <div className="min-h-screen flex flex-col metallic-base-bg overflow-auto">
       <div className="w-full max-w-5xl mx-auto px-4 pt-24 pb-8 flex flex-col items-end">
         <div className="w-full flex flex-col items-center mb-8">
-          <h2 className="text-xl md:text-2xl font-bold text-center">Custom Made Gallery</h2>
-          <p className="text-gray-500 text-sm md:text-base mt-2 text-center">고객들에게 전달된 주문제작 상품들을 소개합니다.</p>
+          <h2 className="text-xl font-[500] text-center">Custom Made Gallery</h2>
+          <p className="text-gray-500 text-sm md:text-base mt-2 text-center">할리우드의 주문제작 상품들을 소개합니다.</p>
         </div>
         <CustomMadeInquiryButton className="mb-8 !w-[200px] ml-auto" />
         {loading ? (
@@ -44,7 +54,7 @@ export default function CustomMadeGalleryPage() {
         ) : error ? (
           <div className="w-full text-center text-red-500 py-16">{error}</div>
         ) : (
-          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-12">
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-16">
             {gallery.map((item) => (
               <div
                 key={item.id}
@@ -82,7 +92,7 @@ export default function CustomMadeGalleryPage() {
               {modal.desc}
             </div>
             <button
-              className="absolute top-2 right-2 text-white bg-black/60 rounded-full p-2 hover:bg-black/80 transition"
+              className="absolute top-2 right-2 text-white bg-black/60 rounded-full p-2 hover:bg-black/80 transition cursor-pointer"
               onClick={() => setModal(null)}
               aria-label="닫기"
             >
