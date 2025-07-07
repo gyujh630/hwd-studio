@@ -85,11 +85,11 @@ export default function CustomOrderInquiryPage() {
     form.title.trim() &&
     form.title.length <= MAX_TITLE_LENGTH &&
     form.body.trim() &&
-    form.body.length <= MAX_BODY_LENGTH &&
-    form.captcha.trim();
+    form.body.length <= MAX_BODY_LENGTH
+    // form.captcha.trim();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-auto">
       <main className="flex-1">
         <div className="w-full mx-auto pt-4 md:pt-32 pb-12 px-4 overflow-auto metallic-base-bg">
           <div className="max-w-xl mx-auto rounded-2xl p-6 sm:p-8">
@@ -206,7 +206,7 @@ export default function CustomOrderInquiryPage() {
                   className="hidden"
                 />
               </div>
-              <div>
+              {/* <div>
                 <label className="block font-semibold mb-1">보안문자 <span className="text-red-500">*</span></label>
                 <input
                   type="text"
@@ -218,7 +218,7 @@ export default function CustomOrderInquiryPage() {
                   required
                   placeholder="보안문자 입력"
                 />
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className={`w-full font-semibold py-2 text-lg rounded-lg transition ${

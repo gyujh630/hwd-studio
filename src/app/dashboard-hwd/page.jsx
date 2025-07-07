@@ -8,14 +8,17 @@ export default function AdminDashboardHome() {
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">빠른 링크</h2>
           <div className="space-y-2">
+            <a href="/dashboard-hwd/site-config" className="block text-blue-600 hover:text-blue-800">
+              → 사이트 관리
+            </a>
             <a href="/dashboard-hwd/products" className="block text-blue-600 hover:text-blue-800">
               → 상품 관리
             </a>
             <a href="/dashboard-hwd/custom-orders" className="block text-blue-600 hover:text-blue-800">
               → 주문제작 문의 관리
             </a>
-            <a href="/dashboard-hwd/handmade" className="block text-blue-600 hover:text-blue-800">
-              → 핸드메이드 상품 관리
+            <a href="/dashboard-hwd/custom-made-gallery" className="block text-blue-600 hover:text-blue-800">
+              → 주문제작 갤러리 관리
             </a>
           </div>
         </div>

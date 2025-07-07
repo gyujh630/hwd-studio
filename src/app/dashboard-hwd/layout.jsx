@@ -50,9 +50,10 @@ export default function AdminLayout({ children }) {
             <h3 className="text-xl font-bold mb-8">할리우드 관리자페이지</h3>
             <nav className="flex flex-col gap-4">
               <Link href="/dashboard-hwd">대시보드 홈</Link>
+              <Link href="/dashboard-hwd/site-config">사이트 관리</Link>
               <Link href="/dashboard-hwd/products">상품 관리</Link>
-              <Link href="/dashboard-hwd/handmade">핸드메이드 상품 관리</Link>
               <Link href="/dashboard-hwd/custom-orders">주문제작 문의 관리</Link>
+              <Link href="/dashboard-hwd/custom-made-gallery">주문제작 갤러리 관리</Link>
             </nav>
           </div>
           <button

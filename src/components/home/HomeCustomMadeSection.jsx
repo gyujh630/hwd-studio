@@ -2,25 +2,40 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ImageCarousel from "@/components/common/ImageCarousel";
 import CustomMadeInquiryButton from "@/components/common/CustomMadeInquiryButton";
+import { fetchSectionConfig } from "@/lib/firebaseSiteConfig";
 
-const images = ["/images/furnitures/carpenter1.png", "/images/furnitures/carpenter2.png"];
-
-export default function HomeProductsSection({ vh }) {
-  const [currentIdx, setCurrentIdx] = useState(0);
+export default function HomeCustomMadeSection({ vh }) {
+  const [section, setSection] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
 
-  const prev = () =>
-    setCurrentIdx((prev) => (prev - 1 + images.length) % images.length);
-  const next = () => setCurrentIdx((prev) => (prev + 1) % images.length);
-
   useEffect(() => {
+    let ignore = false;
+    async function load() {
+      setLoading(true);
+      setError("");
+      try {
+        const data = await fetchSectionConfig("customMadeSection");
+        if (!ignore) setSection(data);
+      } catch {
+        setError("데이터를 불러오는 중 오류가 발생했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
     setIsVisible(true);
+    return () => { ignore = true; };
   }, []);
+
+  if (loading) return null;
+  if (error) return <div className="text-center py-16 text-red-500">{error}</div>;
+  if (!section) return null;
 
   return (
     <>
@@ -41,32 +56,29 @@ export default function HomeProductsSection({ vh }) {
         >
           <div className="space-y-4">
             <h2 className="text-xl md:text-3xl lg:text-5xl font-bold leading-tight tracking-tight">
-              공간과 취향을 고려한
+              {section.titles?.[0] || "공간과 취향을 고려한"}
               <br />
               <span className="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                1:1 맞춤 제작
+                {section.titles?.[1] || "1:1 맞춤 제작"}
               </span>
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-gray-800 to-gray-400 mx-auto lg:mx-0 rounded-full" />
           </div>
 
           <p className="md:leading-7 md:text-base text-sm text-black/80">
-            원하는 디자인, 사이즈, 색상까지
+            {section.descs?.[0] || "원하는 디자인, 사이즈, 색상까지"}
             <br />
-            세상에 단 하나뿐인 가구를 제작해드립니다.
+            {section.descs?.[1] || "세상에 단 하나뿐인 가구를 제작해드립니다."}
             <br />
-            라이프스타일과 공간에 꼭 맞는 맞춤 제작 서비스를 제공합니다.
+            {section.descs?.[2] || "라이프스타일과 공간에 꼭 맞는 맞춤 제작 서비스를 제공합니다."}
           </p>
 
           <p className="text-xs text-gray-500">
-            · 모든 과정은 1:1 상담을 통해 진행됩니다.
-            <br />
+            {section.caption || "· 모든 과정은 1:1 상담을 통해 진행됩니다."}
           </p>
 
           <div className="flex flex-row justify-center lg:justify-start gap-4 pt-4">
-            <button className="btn-sub w-full font-semibold">
-              제품 둘러보기
-            </button>
+            <button className="btn-sub w-full font-semibold">맞춤제작 사례</button>
             <CustomMadeInquiryButton />
           </div>
         </div>
@@ -78,14 +90,12 @@ export default function HomeProductsSection({ vh }) {
           } order-1 lg:order-2`}
         >
           <ImageCarousel
-            images={images}
+            images={section.images || []}
             imageClassName="object-cover"
             overlay={() => <div className="absolute inset-0 bg-black/30 sm:bg-black/30 z-10 pointer-events-none" />}
           />
         </div>
       </section>
-
-      <style jsx>{``}</style>
     </>
   );
 }

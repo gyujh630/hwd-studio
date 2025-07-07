@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "HOLLYWOOD STUDIO - 수제가구공방",
-  description: "HOLLYWOOD STUDIO에서 만드는 아름다운 수제가구. 개성 있는 디자인과 정성스러운 제작으로 당신의 공간을 특별하게 만들어드립니다.",
+  title: "HOLLYWOOD STUDIO | 수제가구공방 할리우드",
+  description: "특별함과 아름다움이 조화를 이루는, 세상에 하나뿐인 가구를 만듭니다.",
 };
 export default function RootLayout({ children }) {
   return (
