@@ -85,7 +85,7 @@ export default function CustomOrderInquiryPage() {
     form.title.trim() &&
     form.title.length <= MAX_TITLE_LENGTH &&
     form.body.trim() &&
-    form.body.length <= MAX_BODY_LENGTH
+    form.body.length <= MAX_BODY_LENGTH 
     // form.captcha.trim();
 
   return (

@@ -78,7 +78,7 @@ export default function HomeCustomMadeSection({ vh }) {
           </p>
 
           <div className="flex flex-row justify-center lg:justify-start gap-4 pt-4">
-            <button className="btn-sub w-full font-semibold">맞춤제작 사례</button>
+            <button className="btn-sub w-full font-semibold" onClick={() => router.push("/custom-made-gallery")}>맞춤제작 사례</button>
             <CustomMadeInquiryButton />
           </div>
         </div>

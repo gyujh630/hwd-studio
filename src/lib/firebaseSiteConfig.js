@@ -1,5 +1,5 @@
 import { db, storage, auth } from "./firebase";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc, collection, getDocs, addDoc, deleteDoc, query, orderBy } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
@@ -49,4 +49,28 @@ export async function updateSectionConfig(section, { images, titles, descs, capt
       caption // string
     }
   }, { merge: true });
+}
+
+// 주문제작 갤러리 불러오기 (order 순)
+export async function getGallery() {
+  const q = query(collection(db, "customMadeGallery"), orderBy("order"));
+  const snap = await getDocs(q);
+  return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+// 갤러리 아이템 추가 (desc, imageUrl, order)
+export async function addGalleryItem({ desc, imageUrl, order }) {
+  return await addDoc(collection(db, "customMadeGallery"), { desc, imageUrl, order });
+}
+
+// 갤러리 아이템 삭제
+export async function deleteGalleryItem(id) {
+  return await deleteDoc(doc(db, "customMadeGallery", id));
+}
+
+// 갤러리 순서 변경 (order 필드 일괄 업데이트)
+export async function reorderGallery(items) {
+  // items: [{id, order}, ...]
+  const updates = items.map(item => updateDoc(doc(db, "customMadeGallery", item.id), { order: item.order }));
+  return Promise.all(updates);
 } 

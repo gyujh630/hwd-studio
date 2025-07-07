@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 const MENU_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
-  { label: "Custom Made", href: "/custom-made" },
+  { label: "Custom Made", href: "/custom-made-gallery" },
 ];
 
 export default function Topbar() {
