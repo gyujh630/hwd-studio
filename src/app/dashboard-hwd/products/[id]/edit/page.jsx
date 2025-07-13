@@ -48,9 +48,15 @@ export default function ProductEditPage() {
   if (error) return <div className="text-center text-red-500 py-8">{error}</div>;
   if (!product) return <div className="text-center text-gray-400 py-8">상품을 찾을 수 없습니다.</div>;
 
+  // detailImages를 ProductForm에서 기대하는 형태로 변환
+  const transformedProduct = {
+    ...product,
+    detailImages: product.detailImages?.map(url => ({ url })) || []
+  };
+
   return (
     <div>
-      <ProductForm initialData={product} onSubmit={handleSubmit} isEdit />
+      <ProductForm initialData={transformedProduct} onSubmit={handleSubmit} isEdit />
       {saving && <div className="text-center text-gray-500 mt-4">저장 중...</div>}
       {error && <div className="text-center text-red-500 mt-4">{error}</div>}
     </div>

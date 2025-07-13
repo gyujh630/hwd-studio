@@ -207,8 +207,21 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
                   <span className="text-xs text-blue-600 font-bold">대표</span>
                 </div>
                 {photo.preview || photo.fileUrl ? (
-                  <Image src={photo.preview || photo.fileUrl || ""} alt="미리보기" width={128} height={128} className="w-32 h-32 object-cover rounded mb-2" />
+                  <Image 
+                    src={photo.preview || photo.fileUrl || ""} 
+                    alt="미리보기" 
+                    width={128} 
+                    height={128} 
+                    className="w-32 h-32 object-cover rounded mb-2" 
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
                 ) : null}
+                <div className="w-32 h-32 bg-gray-200 rounded mb-2 flex items-center justify-center text-xs text-gray-500 hidden">
+                  이미지 로드 실패
+                </div>
                 <input
                   className="input bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300 w-full px-2 py-1 rounded mb-1"
                   placeholder="색상명 (예: Walnut, Red)"
@@ -264,20 +277,22 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
               {detailImages.map((img, idx) => (
                 <div key={idx} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
                   <div className="flex-shrink-0">
-                    <Image 
-                      src={img.preview || img.url} 
-                      alt={`상세페이지 이미지 ${idx + 1}`} 
-                      width={80} 
-                      height={80} 
-                      className="w-20 h-20 object-cover rounded" 
-                    />
+                    {img.preview || img.url ? (
+                      <Image 
+                        src={img.preview || img.url} 
+                        alt={`상세페이지 이미지 ${idx + 1}`} 
+                        width={80} 
+                        height={80} 
+                        className="w-20 h-20 object-cover rounded" 
+                      />
+                    ) : null}
                   </div>
                   <div className="flex-1">
                     <div className="text-sm font-medium text-gray-700">
                       이미지 {idx + 1}
                     </div>
                     <div className="text-xs text-gray-500">
-                      {img.file ? img.file.name : '기존 이미지'}
+                      {img.file ? img.file.name : (img.url ? '기존 이미지' : '이미지 로드 중...')}
                     </div>
                   </div>
                   <div className="flex gap-1">
