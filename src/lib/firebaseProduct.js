@@ -48,6 +48,18 @@ export async function createProduct(product) {
     })
   );
 
+  // 쇼핑몰 상세페이지 이미지 업로드
+  const detailImagesWithUrls = await Promise.all(
+    (product.detailImages || []).map(async (img, idx) => {
+      if (img.file) {
+        const url = await uploadProductImage(img.file, productId, `detail_${idx}`);
+        return { url };
+      } else {
+        return { url: img.url };
+      }
+    })
+  );
+
   const cleanData = {
     name: product.name,
     price: Number(product.price),
@@ -55,6 +67,7 @@ export async function createProduct(product) {
     description: product.description,
     idusUrl: product.idusUrl,
     photos: photosWithUrls,
+    detailImages: detailImagesWithUrls.map(img => img.url),
     createdAt: Timestamp.now(),
   };
   await updateDoc(docRef, cleanData);
@@ -102,6 +115,19 @@ export async function updateProduct(id, product) {
       }
     })
   );
+
+  // 쇼핑몰 상세페이지 이미지 업로드
+  const detailImagesWithUrls = await Promise.all(
+    (product.detailImages || []).map(async (img, idx) => {
+      if (img.file) {
+        const url = await uploadProductImage(img.file, id, `detail_${idx}`);
+        return { url };
+      } else {
+        return { url: img.url };
+      }
+    })
+  );
+
   const cleanData = {
     name: product.name,
     price: Number(product.price),
@@ -109,6 +135,7 @@ export async function updateProduct(id, product) {
     description: product.description,
     idusUrl: product.idusUrl,
     photos: photosWithUrls,
+    detailImages: detailImagesWithUrls.map(img => img.url),
   };
   await updateDoc(docRef, cleanData);
 }

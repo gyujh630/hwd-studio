@@ -94,6 +94,21 @@ export default function ProductDetailPage() {
           ))}
         </div>
       </div>
+      
+      {/* 쇼핑몰 상세페이지 이미지 */}
+      {product.detailImages && product.detailImages.length > 0 && (
+        <div className="mb-6">
+          <div className="font-semibold mb-2">상세페이지 이미지</div>
+          <div className="grid grid-cols-2 gap-4">
+            {product.detailImages.map((imageUrl, idx) => (
+              <div key={idx} className="border border-gray-200 rounded p-2 flex flex-col items-center">
+                <Image src={imageUrl} alt={`상세페이지 이미지 ${idx + 1}`} width={96} height={96} className="w-24 h-24 object-cover rounded mb-1" />
+                <div className="text-sm font-semibold">이미지 {idx + 1}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="flex gap-4 mt-8">
         <button className="admin-btn" onClick={handleEdit} disabled={deleting}>수정</button>
         <button className="admin-btn-sub" onClick={handleDelete} disabled={deleting}>삭제</button>

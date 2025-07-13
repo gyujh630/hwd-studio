@@ -13,7 +13,10 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
   const [thumbnailIdx, setThumbnailIdx] = useState(
     initialData.photos?.findIndex(p => p.isThumbnail) ?? 0
   );
+  // 쇼핑몰 상세페이지 이미지: [{file, preview, url}]
+  const [detailImages, setDetailImages] = useState(initialData.detailImages || []);
   const fileInputRef = useRef();
+  const detailImageInputRef = useRef();
 
   // 사이즈 옵션 추가/삭제/변경
   const handleSizeChange = (idx, value) => {
@@ -51,6 +54,39 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
     setPhotos(newPhotos);
   };
 
+  // 쇼핑몰 상세페이지 이미지 추가
+  const handleDetailImageAdd = (e) => {
+    const files = Array.from(e.target.files);
+    const validFiles = files.filter(file => {
+      if (!file.type.startsWith('image/')) {
+        alert(`${file.name}은(는) 이미지 파일이 아닙니다.`);
+        return false;
+      }
+      return true;
+    }).slice(0, 10 - detailImages.length);
+    
+    const newImages = validFiles.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
+    setDetailImages([...detailImages, ...newImages]);
+    e.target.value = "";
+  };
+
+  // 쇼핑몰 상세페이지 이미지 삭제
+  const handleDetailImageRemove = (idx) => {
+    setDetailImages(detailImages.filter((_, i) => i !== idx));
+  };
+
+  // 쇼핑몰 상세페이지 이미지 순서 변경
+  const moveDetailImage = (from, to) => {
+    if (to < 0 || to >= detailImages.length) return;
+    const arr = [...detailImages];
+    const [moved] = arr.splice(from, 1);
+    arr.splice(to, 0, moved);
+    setDetailImages(arr);
+  };
+
   // 필수값 체크
   const isValid =
     name.trim() &&
@@ -66,7 +102,15 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
     if (!isValid) return;
     // 대표 썸네일 지정
     const photosWithThumb = photos.map((p, i) => ({ ...p, isThumbnail: i === thumbnailIdx }));
-    onSubmit && onSubmit({ name, price, sizes, description, idusUrl, photos: photosWithThumb });
+    onSubmit && onSubmit({ 
+      name, 
+      price, 
+      sizes, 
+      description, 
+      idusUrl, 
+      photos: photosWithThumb,
+      detailImages 
+    });
   };
 
   return (
@@ -160,6 +204,81 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
           ))}
         </div>
       </div>
+      
+      {/* 쇼핑몰 상세페이지 이미지 */}
+      <div>
+        <label className="block font-semibold mb-1">쇼핑몰 상세페이지 이미지 (최대 10장)</label>
+        <div className="text-xs text-gray-500 mb-2">이미지 파일만 업로드 가능합니다. 순서를 변경할 수 있습니다.</div>
+        <input
+          ref={detailImageInputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleDetailImageAdd}
+          className="hidden"
+        />
+        <button
+          type="button"
+          className="admin-btn my-2"
+          onClick={() => detailImageInputRef.current && detailImageInputRef.current.click()}
+          disabled={detailImages.length >= 10}
+        >
+          상세페이지 이미지 추가
+        </button>
+        <span className="ml-2 text-sm text-gray-500">{detailImages.length}/10</span>
+        
+        {detailImages.length > 0 && (
+          <div className="mt-4 space-y-3">
+            {detailImages.map((img, idx) => (
+              <div key={idx} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
+                <div className="flex-shrink-0">
+                  <Image 
+                    src={img.preview || img.url} 
+                    alt={`상세페이지 이미지 ${idx + 1}`} 
+                    width={80} 
+                    height={80} 
+                    className="w-20 h-20 object-cover rounded" 
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-gray-700">
+                    이미지 {idx + 1}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {img.file ? img.file.name : '기존 이미지'}
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  <button
+                    type="button"
+                    onClick={() => moveDetailImage(idx, idx - 1)}
+                    disabled={idx === 0}
+                    className="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
+                  >
+                    ↑
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => moveDetailImage(idx, idx + 1)}
+                    disabled={idx === detailImages.length - 1}
+                    className="px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
+                  >
+                    ↓
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDetailImageRemove(idx)}
+                    className="px-2 py-1 text-xs bg-red-200 hover:bg-red-300 text-red-700 rounded"
+                  >
+                    삭제
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      
       <div>
         <label className="block font-semibold mb-1">아이디어스 링크</label>
         <input className="input bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300 w-full px-3 py-2 rounded"

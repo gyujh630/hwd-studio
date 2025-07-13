@@ -91,7 +91,7 @@ export default async function ProductDetailPage({ params }) {
                         {sizes.map((size, idx) => (
                           <div
                             key={idx}
-                            className="py-2 px-3 text-center text-sm font-medium border border-gray-200 bg-white text-gray-500 rounded-sm whitespace-nowrap"
+                            className="py-2 px-3 text-center text-xs font-medium border border-gray-200 bg-white text-gray-500 rounded-sm whitespace-nowrap"
                           >
                             {size}
                           </div>
@@ -109,7 +109,7 @@ export default async function ProductDetailPage({ params }) {
                         {photos.map((photo, idx) => (
                           <div
                             key={idx}
-                            className="py-2 px-3 text-center text-sm font-medium border border-gray-200 bg-white text-gray-500 rounded-sm whitespace-nowrap"
+                            className="py-2 px-3 text-center text-xs font-medium border border-gray-200 bg-white text-gray-500 rounded-sm whitespace-nowrap"
                           >
                             {photo.colorName}
                           </div>
@@ -125,14 +125,30 @@ export default async function ProductDetailPage({ params }) {
                 </div>
               </div>
             </div>
-            <div className="w-full max-w-4xl mx-auto px-4 mt-8">
-              <div className="space-y-2 flex flex-col mb-8">
+            <div className="w-full max-w-4xl mx-auto px-4 my-16">
+              <div className="space-y-2 flex flex-col">
                 <h3 className="text-sm font-semibold text-gray-900">상품 설명</h3>
                 <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line flex-1">
                   {description}
                 </p>
               </div>
             </div>
+
+            {/* 쇼핑몰 상세페이지 이미지 */}
+            {Array.isArray(product.detailImages) && product.detailImages.length > 0 && (
+              <div className="w-full mx-autoflex flex-col">
+                {product.detailImages.map((url, idx) => (
+                  <div key={idx} className="w-full flex justify-center">
+                    <img
+                      src={url}
+                      alt={`상세페이지 이미지 ${idx + 1}`}
+                      className="w-full object-contain bg-white"
+                      style={{ maxHeight: 600 }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </main>
