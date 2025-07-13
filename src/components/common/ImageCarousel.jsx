@@ -35,7 +35,9 @@ export default function ImageCarousel({
                 alt={`Carousel ${idx}`}
                 fill
                 className={imageClassName}
-                sizes="200px"
+                sizes="(max-width: 768px) 600px, 800px"
+                quality={100}
+                priority={idx === 0}
               />
               {overlay && <div className="absolute inset-0 z-20 pointer-events-none shadow-2xl">{overlay(idx)}</div>}
             </div>
