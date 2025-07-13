@@ -41,14 +41,14 @@ export default function CustomMadeInquiryButton({ className = "" }) {
             href={KAKAO_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 md:text-sm text-xs font-normal text-neutral-800 bg-white hover:bg-neutral-100 rounded-none transition-all duration-200 cursor-pointer border-b border-gray-100"
+            className="flex items-center gap-2 md:px-6 md:py-3 px-4 py-2 md:text-sm text-xs font-normal text-neutral-800 bg-white hover:bg-neutral-100 rounded-none transition-all duration-200 cursor-pointer border-b border-gray-100"
             onClick={() => setOpen(false)}
           >
             카톡으로 상담하기
           </a>
           <a
             href={INQUIRY_LINK}
-            className="flex items-center gap-2 px-6 py-3 md:text-sm text-xs font-normal text-neutral-800 bg-white hover:bg-neutral-100 rounded-none transition-all duration-200 cursor-pointer"
+            className="flex items-center gap-2 md:px-6 md:py-3 px-4 py-2 md:text-sm text-xs font-normal text-neutral-800 bg-white hover:bg-neutral-100 rounded-none transition-all duration-200 cursor-pointer"
             onClick={() => setOpen(false)}
           >
             사이트에서 문의하기
@@ -66,6 +66,7 @@ export default function CustomMadeInquiryButton({ className = "" }) {
         /* 모바일(640px 이하)에서는 위로, 데스크탑은 아래로 */
         .dropdown-choices {
           top: 100%;
+          margin-top: 0.5rem;
         }
         @media (max-width: 640px) {
           .dropdown-choices {

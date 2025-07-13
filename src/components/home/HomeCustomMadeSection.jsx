@@ -77,8 +77,8 @@ export default function HomeCustomMadeSection({ vh }) {
             {section.caption || "· 모든 과정은 1:1 상담을 통해 진행됩니다."}
           </p>
 
-          <div className="w-9/10 flex flex-row justify-center lg:justify-start gap-2 pt-4">
-            <button className="btn-sub w-full font-semibold" onClick={() => router.push("/custom-made-gallery")}>맞춤 제작 사례</button>
+          <div className="md:w-full w-9/10 mx-auto flex flex-row justify-center lg:justify-start md:gap-4 gap-2 pt-4">
+            <button className="btn-sub w-full font-semibold" onClick={() => router.push("/custom-made-gallery")}>맞춤제작 사례</button>
             <CustomMadeInquiryButton />
           </div>
         </div>
