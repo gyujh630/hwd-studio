@@ -25,7 +25,7 @@ export default function KakaoConsultButton() {
     };
   }, []);
 
-  // 드래그 시작
+  // 드래그 시작 (마우스)
   const handleMouseDown = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -38,7 +38,21 @@ export default function KakaoConsultButton() {
     });
   };
 
-  // 드래그 중
+  // 드래그 시작 (터치)
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    setIsDragging(true);
+    setHasDragged(false);
+    setDragStartPos({ x: touch.clientX, y: touch.clientY });
+    const rect = buttonRef.current.getBoundingClientRect();
+    setDragOffset({
+      x: touch.clientX - rect.left,
+      y: touch.clientY - rect.top,
+    });
+  };
+
+  // 드래그 중 (마우스)
   const handleMouseMove = (e) => {
     if (!isDragging) return;
     e.preventDefault();
@@ -67,8 +81,48 @@ export default function KakaoConsultButton() {
     });
   };
 
-  // 드래그 종료
+  // 드래그 중 (터치)
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+
+    // 드래그 거리 계산
+    const dragDistance = Math.sqrt(
+      Math.pow(touch.clientX - dragStartPos.x, 2) +
+        Math.pow(touch.clientY - dragStartPos.y, 2)
+    );
+
+    // 5px 이상 움직였으면 드래그로 간주
+    if (dragDistance > 5) {
+      setHasDragged(true);
+    }
+
+    // x축은 고정 (우측 하단), y축만 이동
+    const fixedX = window.innerWidth - 56 - 24;
+    const newY = touch.clientY - dragOffset.y;
+
+    // 화면 경계 내에서만 이동 (y축만)
+    const maxY = window.innerHeight - 56;
+
+    setPosition({
+      x: fixedX,
+      y: Math.max(0, Math.min(newY, maxY)),
+    });
+  };
+
+  // 드래그 종료 (마우스)
   const handleMouseUp = () => {
+    setIsDragging(false);
+    // 드래그가 있었으면 클릭 이벤트 방지
+    if (hasDragged) {
+      setTimeout(() => setHasDragged(false), 100);
+    }
+  };
+
+  // 드래그 종료 (터치)
+  const handleTouchEnd = () => {
     setIsDragging(false);
     // 드래그가 있었으면 클릭 이벤트 방지
     if (hasDragged) {
@@ -80,10 +134,14 @@ export default function KakaoConsultButton() {
     if (isDragging) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("touchmove", handleTouchMove, { passive: false });
+      document.addEventListener("touchend", handleTouchEnd);
 
       return () => {
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
       };
     }
   }, [isDragging, dragOffset, dragStartPos]);
@@ -99,6 +157,7 @@ export default function KakaoConsultButton() {
         top: position ? position.y : undefined,
       }}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
     >
       <a
         href="https://pf.kakao.com/_fpxnFn"
