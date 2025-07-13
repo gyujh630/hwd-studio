@@ -222,7 +222,7 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
       
       {/* 쇼핑몰 상세페이지 이미지 */}
       <div>
-        <label className="block font-semibold mb-1">쇼핑몰 상세페이지 이미지 (최대 10장)</label>
+        <label className="block font-semibold mb-1">상세페이지 이미지 (최대 10장)</label>
         <div className="text-xs text-gray-500 mb-2">이미지 파일만 업로드 가능합니다. 순서를 변경할 수 있습니다.</div>
         <input
           ref={detailImageInputRef}
