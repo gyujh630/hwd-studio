@@ -11,7 +11,8 @@ export const revalidate = 0;
 
 export async function generateMetadata(props) {
   const { params } = await props;
-  const product = await fetchProductById(params.id);
+  const resolvedParams = await params;
+  const product = await fetchProductById(resolvedParams.id);
   const name = product?.name || "상품 상세";
   const desc = product?.description?.slice(0, 80) || "할리우드 공방 수제가구";
   return {
@@ -23,7 +24,8 @@ export async function generateMetadata(props) {
 
 export default async function ProductDetailPage(props) {
   const { params } = await props;
-  const product = await fetchProductById(params.id);
+  const resolvedParams = await params;
+  const product = await fetchProductById(resolvedParams.id);
   if (!product) {
     return (
       <div className="w-full min-h-screen bg-gradient-to-br from-red-50 to-rose-100 flex items-center justify-center">

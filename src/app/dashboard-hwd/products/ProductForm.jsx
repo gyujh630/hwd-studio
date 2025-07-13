@@ -54,6 +54,21 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
     setPhotos(newPhotos);
   };
 
+  // 대표 사진 선택 시 해당 사진을 0번 인덱스로 이동
+  const handleThumbnailChange = (newThumbnailIdx) => {
+    if (newThumbnailIdx === thumbnailIdx) return; // 이미 대표인 경우
+    
+    const newPhotos = [...photos];
+    const selectedPhoto = newPhotos[newThumbnailIdx];
+    
+    // 선택된 사진을 0번 인덱스로 이동
+    newPhotos.splice(newThumbnailIdx, 1);
+    newPhotos.unshift(selectedPhoto);
+    
+    setPhotos(newPhotos);
+    setThumbnailIdx(0); // 대표 사진은 항상 0번 인덱스
+  };
+
   // 쇼핑몰 상세페이지 이미지 추가
   const handleDetailImageAdd = (e) => {
     const files = Array.from(e.target.files);
@@ -169,7 +184,7 @@ export default function ProductForm({ initialData = {}, onSubmit, isEdit = false
                   type="radio"
                   name="thumbnail"
                   checked={thumbnailIdx === idx}
-                  onChange={() => setThumbnailIdx(idx)}
+                  onChange={() => handleThumbnailChange(idx)}
                   className="accent-blue-600"
                 />
                 <span className="text-xs text-blue-600 font-bold">대표</span>
