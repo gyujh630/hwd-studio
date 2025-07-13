@@ -58,9 +58,15 @@ export async function getGallery() {
   return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
-// 갤러리 아이템 추가 (desc, imageUrl, order)
-export async function addGalleryItem({ desc, imageUrl, order }) {
-  return await addDoc(collection(db, "customMadeGallery"), { desc, imageUrl, order });
+// 갤러리 아이템 추가 (desc, images, order)
+export async function addGalleryItem({ desc, images, order }) {
+  return await addDoc(collection(db, "customMadeGallery"), { desc, images, order });
+}
+
+// 갤러리 아이템 수정
+export async function updateGalleryItem(id, { desc, images }) {
+  checkAuthOrRedirect();
+  return await updateDoc(doc(db, "customMadeGallery", id), { desc, images });
 }
 
 // 갤러리 아이템 삭제

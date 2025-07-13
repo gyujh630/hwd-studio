@@ -48,7 +48,7 @@ export default function HomeCustomMadeSection({ vh }) {
 
         {/* 왼쪽: 텍스트 + 버튼 */}
         <div
-          className={`text-center lg:text-left space-y-6 max-w-lg transition-all duration-1000 delay-300 ${
+          className={`w-full text-center lg:text-left space-y-6 max-w-lg transition-all duration-1000 delay-300 ${
             isVisible
               ? "translate-x-0 opacity-100"
               : "-translate-x-20 opacity-0"
@@ -77,8 +77,8 @@ export default function HomeCustomMadeSection({ vh }) {
             {section.caption || "· 모든 과정은 1:1 상담을 통해 진행됩니다."}
           </p>
 
-          <div className="flex flex-row justify-center lg:justify-start gap-4 pt-4">
-            <button className="btn-sub w-full font-semibold" onClick={() => router.push("/custom-made-gallery")}>맞춤제작 사례</button>
+          <div className="w-9/10 flex flex-row justify-center lg:justify-start gap-2 pt-4">
+            <button className="btn-sub w-full font-semibold" onClick={() => router.push("/custom-made-gallery")}>맞춤 제작 사례</button>
             <CustomMadeInquiryButton />
           </div>
         </div>
