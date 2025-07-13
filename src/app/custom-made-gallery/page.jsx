@@ -2,6 +2,10 @@ import { getGallery } from "@/lib/firebaseSiteConfig";
 import CustomMadeGalleryClientSection from "./CustomMadeGalleryClientSection";
 import Footer from "@/components/common/Footer";
 
+// 동적 렌더링 강제 설정
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata = {
   title: "주문제작 상품 | HOLLYWOOD STUDIO",
   description: "할리우드의 주문제작 상품들을 소개합니다.",
