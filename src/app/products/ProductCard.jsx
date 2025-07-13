@@ -17,7 +17,7 @@ export default function ProductCard({ product }) {
           <img
             src={thumbnail}
             alt={product.name}
-            className="object-contain w-full h-full"
+            className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100" />
         </div>

@@ -35,7 +35,7 @@ export default function ProductDetailGallery({ photos, name }) {
           <img
             src={selectedPhoto.fileUrl}
             alt={name}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-100">
