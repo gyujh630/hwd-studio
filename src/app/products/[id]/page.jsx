@@ -9,7 +9,8 @@ import ProductDetailGallery from "./ProductDetailGallery";
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const { params } = await props;
   const product = await fetchProductById(params.id);
   const name = product?.name || "상품 상세";
   const desc = product?.description?.slice(0, 80) || "할리우드 공방 수제가구";
@@ -20,7 +21,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ProductDetailPage({ params }) {
+export default async function ProductDetailPage(props) {
+  const { params } = await props;
   const product = await fetchProductById(params.id);
   if (!product) {
     return (

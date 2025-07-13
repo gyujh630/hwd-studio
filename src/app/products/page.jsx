@@ -15,6 +15,7 @@ function serializeProduct(product) {
   return {
     ...product,
     createdAt: product.createdAt?.toDate ? product.createdAt.toDate().toISOString() : product.createdAt ?? null,
+    updatedAt: product.updatedAt?.toDate ? product.updatedAt.toDate().toISOString() : product.updatedAt ?? null,
     // 필요하다면 다른 Timestamp 필드도 여기에 추가
   };
 }

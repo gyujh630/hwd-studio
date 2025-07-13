@@ -60,6 +60,7 @@ export async function createProduct(product) {
     })
   );
 
+  const now = Timestamp.now();
   const cleanData = {
     name: product.name,
     price: Number(product.price),
@@ -68,7 +69,8 @@ export async function createProduct(product) {
     idusUrl: product.idusUrl,
     photos: photosWithUrls,
     detailImages: detailImagesWithUrls.map(img => img.url),
-    createdAt: Timestamp.now(),
+    createdAt: now,
+    updatedAt: now,
   };
   await updateDoc(docRef, cleanData);
   return productId;
@@ -76,7 +78,7 @@ export async function createProduct(product) {
 
 // 상품 목록 조회 (페이지네이션)
 export async function fetchProducts({ pageSize = 10, lastDoc = null }) {
-  let q = query(collection(db, "products"), orderBy("createdAt", "desc"), limit(pageSize));
+  let q = query(collection(db, "products"), orderBy("updatedAt", "desc"), limit(pageSize));
   if (lastDoc) q = query(q, startAfter(lastDoc));
   const snap = await getDocs(q);
   const products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -136,6 +138,7 @@ export async function updateProduct(id, product) {
     idusUrl: product.idusUrl,
     photos: photosWithUrls,
     detailImages: detailImagesWithUrls.map(img => img.url),
+    updatedAt: Timestamp.now(),
   };
   await updateDoc(docRef, cleanData);
 }
