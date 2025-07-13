@@ -87,11 +87,11 @@ export default async function ProductDetailPage({ params }) {
                       <h3 className="text-sm font-semibold text-gray-900">
                         사이즈 옵션
                       </h3>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-1">
+                      <div className="flex flex-wrap gap-2">
                         {sizes.map((size, idx) => (
                           <div
                             key={idx}
-                            className="py-1 px-2 text-center text-sm font-medium border border-gray-200 bg-white text-gray-500 rounded-sm"
+                            className="py-2 px-3 text-center text-sm font-medium border border-gray-200 bg-white text-gray-500 rounded-sm whitespace-nowrap"
                           >
                             {size}
                           </div>
@@ -105,11 +105,11 @@ export default async function ProductDetailPage({ params }) {
                       <h3 className="text-sm font-semibold text-gray-900">
                         색상 옵션
                       </h3>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 gap-1">
+                      <div className="flex flex-wrap gap-2">
                         {photos.map((photo, idx) => (
                           <div
                             key={idx}
-                            className="py-1 px-2 text-center text-sm font-medium border border-gray-200 bg-white text-gray-500 rounded-sm"
+                            className="py-2 px-3 text-center text-sm font-medium border border-gray-200 bg-white text-gray-500 rounded-sm whitespace-nowrap"
                           >
                             {photo.colorName}
                           </div>
