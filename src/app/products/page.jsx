@@ -2,6 +2,10 @@ import { fetchProducts, fetchProductsCount } from "@/lib/firebaseProduct";
 import ProductCard from "./ProductCard";
 import Footer from "@/components/common/Footer";
 
+// 동적 렌더링 강제 설정
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata = {
   title: "상품 목록 | HOLLYWOOD STUDIO",
   description: "할리우드의 다양한 수제가구 상품을 만나보세요.",
