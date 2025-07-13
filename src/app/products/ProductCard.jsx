@@ -7,19 +7,25 @@ export default function ProductCard({ product }) {
     ? product.photos.find((p) => p.isThumbnail)?.fileUrl || product.photos[0]?.fileUrl
     : "";
 
+  const handleColorClick = (colorIndex) => {
+    // 즉시 네비게이션
+    router.push(`/products/${product.id}?color=${colorIndex}`);
+  };
+
   return (
-    <div className="p-2 flex flex-col gap-2 group">
+    <div className="p-2 flex flex-col gap-2">
       {thumbnail && (
         <div
-          className="relative w-full aspect-square overflow-hidden mb-2 shadow-lg bg-white cursor-pointer"
+          className="relative w-full aspect-square overflow-hidden mb-2 shadow-lg bg-white cursor-pointer group"
           onClick={() => router.push(`/products/${product.id}`)}
         >
           <img
             src={thumbnail}
             alt={product.name}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
           />
-          <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
         </div>
       )}
       <div
@@ -36,8 +42,12 @@ export default function ProductCard({ product }) {
           <span
             key={idx}
             title={photo.colorName}
-            className="w-5 h-5 rounded-full border border-gray-300"
+            className="w-5 h-5 rounded-full border border-gray-300 cursor-pointer hover:scale-110 transition-transform duration-150 active:scale-95"
             style={{ background: photo.colorValue }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleColorClick(idx);
+            }}
           />
         ))}
       </div>

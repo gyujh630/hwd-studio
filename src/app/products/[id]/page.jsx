@@ -53,6 +53,11 @@ export default async function ProductDetailPage(props) {
     );
   }
   const { name, price, description, idusUrl, photos = [], sizes } = product;
+  
+  // URL에서 color 파라미터 읽기
+  const searchParams = await props.searchParams;
+  const colorIndex = searchParams?.color ? parseInt(searchParams.color) : null;
+  
   return (
     <div className="min-h-screen flex flex-col overflow-auto">
       <main className="flex-1">
@@ -70,7 +75,7 @@ export default async function ProductDetailPage(props) {
             </div>
             <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-start">
               {/* 좌측: 이미지 갤러리 및 색상 선택 (클라이언트 컴포넌트) */}
-              <ProductDetailGallery photos={photos} name={name} />
+              <ProductDetailGallery photos={photos} name={name} initialColorIndex={colorIndex} />
               {/* 우측: 상품 정보 */}
               <div className="flex flex-col h-full max-h-[600px] lg:max-h-[700px] px-2 lg:px-0">
                 <div className="flex flex-col justify-start space-y-6 pr-1">

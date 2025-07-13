@@ -1,28 +1,42 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function ProductDetailGallery({ photos, name }) {
-  const [selectedIdx, setSelectedIdx] = useState(0);
-
-  // 썸네일 인덱스 설정
-  useEffect(() => {
-    if (photos?.length) {
-      const thumbIdx = photos.findIndex((p) => p.isThumbnail);
-      setSelectedIdx(thumbIdx >= 0 ? thumbIdx : 0);
+export default function ProductDetailGallery({ photos, name, initialColorIndex = null }) {
+  // 초기 상태를 더 빠르게 설정
+  const getInitialIndex = () => {
+    if (!photos?.length) return 0;
+    
+    // URL 파라미터로 전달된 색상 인덱스가 있으면 그것을 사용
+    if (initialColorIndex !== null && initialColorIndex >= 0 && initialColorIndex < photos.length) {
+      return initialColorIndex;
     }
-  }, [photos]);
+    
+    // 기본값: 썸네일이 있으면 썸네일, 없으면 첫 번째
+    const thumbIdx = photos.findIndex((p) => p.isThumbnail);
+    return thumbIdx >= 0 ? thumbIdx : 0;
+  };
 
-  // 이미지 미리 불러오기 (preload)
+  const [selectedIdx, setSelectedIdx] = useState(getInitialIndex);
+
+  // 이미지 미리 불러오기 (preload) - 성능 최적화
   useEffect(() => {
     if (photos && Array.isArray(photos) && photos.length > 0) {
-      photos.forEach((photo) => {
-        if (photo?.fileUrl) {
+      // 선택된 이미지부터 먼저 로드
+      const selectedPhoto = photos[selectedIdx];
+      if (selectedPhoto?.fileUrl) {
+        const img = new window.Image();
+        img.src = selectedPhoto.fileUrl;
+      }
+      
+      // 나머지 이미지들도 백그라운드에서 로드
+      photos.forEach((photo, idx) => {
+        if (idx !== selectedIdx && photo?.fileUrl) {
           const img = new window.Image();
           img.src = photo.fileUrl;
         }
       });
     }
-  }, [photos]);
+  }, [photos, selectedIdx]);
 
   const selectedPhoto = photos[selectedIdx];
 
@@ -36,6 +50,7 @@ export default function ProductDetailGallery({ photos, name }) {
             src={selectedPhoto.fileUrl}
             alt={name}
             className="w-full h-full object-cover"
+            loading="eager"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-100">
@@ -63,10 +78,10 @@ export default function ProductDetailGallery({ photos, name }) {
               key={idx}
               title={photo.colorName}
               className={[
-                "w-5 h-5 rounded-full border flex items-center justify-center cursor-pointer",
+                "w-5 h-5 rounded-full border flex items-center justify-center cursor-pointer transition-all duration-150",
                 idx === selectedIdx
-                  ? "border-2 border-black"
-                  : "border border-gray-300",
+                  ? "border-2 border-black scale-110"
+                  : "border border-gray-300 hover:scale-105",
               ].join(" ")}
               style={{ background: photo.colorValue }}
               onClick={() => setSelectedIdx(idx)}
