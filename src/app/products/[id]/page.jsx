@@ -59,9 +59,9 @@ export default async function ProductDetailPage(props) {
   const colorIndex = searchParams?.color ? parseInt(searchParams.color) : null;
   
   return (
-    <div className="min-h-screen flex flex-col overflow-auto">
+    <div className="min-h-screen flex flex-col overflow-auto metallic-base-bg">
       <main className="flex-1">
-        <div className="w-full metallic-base-bg pb-24">
+        <div className="w-full pb-24">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-36 w-full">
             {/* 상단 공통 영역: 뒤로가기 버튼 */}
             <div className="flex items-center mb-6">

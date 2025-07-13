@@ -10,7 +10,6 @@ function serializeProduct(product) {
     ...product,
     createdAt: product.createdAt?.toDate ? product.createdAt.toDate().toISOString() : product.createdAt ?? null,
     updatedAt: product.updatedAt?.toDate ? product.updatedAt.toDate().toISOString() : product.updatedAt ?? null,
-    // 필요하다면 다른 Timestamp 필드도 여기에 추가
   };
 }
 
@@ -67,7 +66,7 @@ export default function ProductsPage() {
     <div className="min-h-screen flex flex-col metallic-base-bg overflow-y-auto">
       <main className="flex-1 flex items-center justify-center">
         <div className="w-full mx-auto px-4 md:px-12 py-24">
-          {!loading && (
+          {!loading && totalCount > 0 && (
             <div className="flex justify-center my-4 min-h-[2.5rem]">
               <h1 className="text-sm md:text-base font-bold text-center w-full">
                 {totalCount} {totalCount === 1 ? "Item" : "Items"}
@@ -82,20 +81,20 @@ export default function ProductsPage() {
               <div className="w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
             </div>
           ) : (
-            <div className="mx-auto max-w-[1120px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-          {!loading && (
-            <div className="flex justify-center mt-18">
-              <Pagination
-                page={page}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            </div>
+            <>
+              <div className="mx-auto max-w-[1120px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <div className="flex justify-center mt-18">
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            </>
           )}
         </div>
       </main>
