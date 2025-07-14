@@ -128,7 +128,7 @@ export default async function ProductDetailPage(props) {
                   )}
                 </div>
                 {/* 구매/문의 버튼 영역 */}
-                <div className="flex flex-col gap-3 mb-6 z-50 mt-6">
+                <div className="flex flex-col gap-3 mb-6 mt-6">
                   <KakaoButtonForProductDetail />
                   <IdusBuyButton idusUrl={idusUrl} />
                 </div>
