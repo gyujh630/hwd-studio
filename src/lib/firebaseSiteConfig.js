@@ -13,6 +13,23 @@ function checkAuthOrRedirect() {
   }
 }
 
+// Storage URL에서 실제 경로 추출
+function extractStoragePathFromUrl(url) {
+  if (url.startsWith("gs://")) {
+    return url.replace(/^gs:\/\/[^/]+\//, "");
+  }
+  if (url.startsWith("/")) {
+    return url.replace(/^\//, "");
+  }
+  if (!url.startsWith("http")) {
+    // 이미 내부 경로일 경우
+    return url;
+  }
+  // https://firebasestorage.googleapis.com/v0/b/버킷명/o/경로?alt=media&token=...
+  const match = url.match(/\/o\/([^?]+)\?/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 // 이미지 업로드 (섹션별, 최대 5장, 순서 보장)
 export async function uploadSectionImage(file, section, idx) {
   checkAuthOrRedirect();
@@ -21,11 +38,19 @@ export async function uploadSectionImage(file, section, idx) {
   return await getDownloadURL(storageRef);
 }
 
-// 이미지 삭제 (Storage에서)
+// 이미지/비디오 삭제 (Storage에서)
 export async function deleteSectionImageByUrl(url) {
   checkAuthOrRedirect();
-  const storageRef = ref(storage, url.replace(/^https?:\/\/[^/]+\//, ""));
-  await deleteObject(storageRef);
+  const storagePath = extractStoragePathFromUrl(url);
+  console.log("삭제 시도 storagePath:", storagePath);
+  const storageRef = ref(storage, storagePath);
+  try {
+    await deleteObject(storageRef);
+    console.log("삭제 성공");
+  } catch (err) {
+    console.error("삭제 실패:", err);
+    throw err;
+  }
 }
 
 // 섹션 데이터 불러오기 (productSection, customMadeSection)
@@ -33,21 +58,38 @@ export async function fetchSectionConfig(section) {
   const docRef = doc(db, "siteConfig", "homeSections");
   const snap = await getDoc(docRef);
   if (!snap.exists()) return null;
-  return snap.data()[section] || null;
+  const data = snap.data()[section] || null;
+  // images만 있고 media가 없으면 변환해서 media도 추가
+  if (data && !data.media && data.images) {
+    data.media = data.images.map((src) => ({ type: "image", src }));
+  }
+  return data;
 }
 
-// 섹션 데이터 저장/수정 (images, titles, descs, caption)
-export async function updateSectionConfig(section, { images, titles, descs, caption }) {
+// 섹션 데이터 저장/수정 (media, images, titles, descs, caption)
+export async function updateSectionConfig(section, { media, images, titles, descs, caption }) {
   checkAuthOrRedirect();
   const docRef = doc(db, "siteConfig", "homeSections");
-  // 병합 저장 (다른 섹션 영향 X)
+  // media가 있으면 media만 저장, 없으면 images 저장
+  const sectionData = {
+    titles,
+    descs,
+    caption
+  };
+  // undefined 필드 제거
+  Object.keys(sectionData).forEach((k) => sectionData[k] === undefined && delete sectionData[k]);
+  if (media) {
+    // media 배열 내 객체의 undefined 필드도 제거
+    sectionData.media = media.map(item => {
+      const clean = { ...item };
+      Object.keys(clean).forEach(k => clean[k] === undefined && delete clean[k]);
+      return clean;
+    });
+  } else if (images) {
+    sectionData.images = images;
+  }
   await setDoc(docRef, {
-    [section]: {
-      images, // [url, ...] 최대 5개
-      titles, // [title1, title2]
-      descs,  // [desc1, desc2, desc3]
-      caption // string
-    }
+    [section]: sectionData
   }, { merge: true });
 }
 

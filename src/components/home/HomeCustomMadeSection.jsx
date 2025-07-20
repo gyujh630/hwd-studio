@@ -90,7 +90,7 @@ export default function HomeCustomMadeSection({ vh }) {
           } order-1 lg:order-2`}
         >
           <ImageCarousel
-            images={section.images || []}
+            media={section.media ? section.media : (section.images || []).map(src => ({ type: "image", src }))}
             imageClassName="object-cover"
             overlay={() => <div className="absolute inset-0 bg-black/30 sm:bg-black/30 z-10 pointer-events-none" />}
           />

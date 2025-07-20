@@ -5,15 +5,39 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useRef } from "react";
 
 export default function ImageCarousel({
-  images,
+  media,
+  images, // fallback for old usage
   imageClassName = "object-contain",
   overlay, // (idx) => ReactNode
   indicatorClassName = "",
   containerClassName = "",
   ...props
 }) {
+  // media 배열이 없으면 images 배열을 media로 변환
+  const mediaList = media
+    ? media
+    : (images || []).map((src) => ({ type: "image", src }));
+
+  // 비디오 ref 배열
+  const videoRefs = useRef([]);
+
+  // 슬라이드 변경 시 비디오 재생/정지
+  const handleSlideChange = (swiper) => {
+    mediaList.forEach((item, idx) => {
+      if (item.type === "video" && videoRefs.current[idx]) {
+        if (swiper.realIndex === idx) {
+          videoRefs.current[idx].play().catch(() => {});
+        } else {
+          videoRefs.current[idx].pause();
+          videoRefs.current[idx].currentTime = 0;
+        }
+      }
+    });
+  };
+
   return (
     <div
       className={`relative w-88 h-72 md:w-120 md:h-92 ${containerClassName}`}
@@ -28,20 +52,39 @@ export default function ImageCarousel({
         }}
         pagination={{ clickable: true, el: ".swiper-pagination-custom" }}
         className="w-full max-w-80 sm:max-w-none h-full rounded-2xl"
+        onSlideChange={handleSlideChange}
+        onSwiper={handleSlideChange}
       >
-        {images.map((src, idx) => (
+        {mediaList.map((item, idx) => (
           <SwiperSlide key={idx}>
             <div className="relative w-full h-full bg-gradient-to-br from-gray-50/50 to-gray-200/50 shadow-2xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent z-10" />
-              <Image
-                src={src}
-                alt={`Carousel ${idx}`}
-                fill
-                className={imageClassName}
-                sizes="(max-width: 768px) 600px, 800px"
-                quality={100}
-                priority={idx === 0}
-              />
+              {item.type === "image" ? (
+                <Image
+                  src={item.src}
+                  alt={`Carousel ${idx}`}
+                  fill
+                  className={imageClassName}
+                  sizes="(max-width: 768px) 600px, 800px"
+                  quality={100}
+                  priority={idx === 0}
+                />
+              ) : item.type === "video" ? (
+                <video
+                  ref={el => (videoRefs.current[idx] = el)}
+                  src={item.src}
+                  poster={item.poster}
+                  className="w-full h-full object-cover"
+                  playsInline
+                  preload="metadata"
+                  style={{ background: "#000" }}
+                  controls={false}
+                  controlsList="nodownload noremoteplayback noplaybackrate"
+                  tabIndex={-1}
+                  muted
+                  loop
+                />
+              ) : null}
               {overlay && (
                 <div className="absolute inset-0 z-20 pointer-events-none shadow-2xl">
                   {overlay(idx)}
