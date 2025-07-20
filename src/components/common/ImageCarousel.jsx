@@ -15,7 +15,10 @@ export default function ImageCarousel({
   ...props
 }) {
   return (
-    <div className={`relative w-88 h-72 md:w-120 md:h-92 ${containerClassName}`} {...props}>
+    <div
+      className={`relative w-88 h-72 md:w-120 md:h-92 ${containerClassName}`}
+      {...props}
+    >
       <Swiper
         modules={[Navigation, Pagination]}
         loop={true}
@@ -24,7 +27,7 @@ export default function ImageCarousel({
           prevEl: ".swiper-button-prev-custom",
         }}
         pagination={{ clickable: true, el: ".swiper-pagination-custom" }}
-        className="w-full h-full rounded-2xl"
+        className="w-full max-w-80 sm:max-w-none h-full rounded-2xl"
       >
         {images.map((src, idx) => (
           <SwiperSlide key={idx}>
@@ -39,7 +42,11 @@ export default function ImageCarousel({
                 quality={100}
                 priority={idx === 0}
               />
-              {overlay && <div className="absolute inset-0 z-20 pointer-events-none shadow-2xl">{overlay(idx)}</div>}
+              {overlay && (
+                <div className="absolute inset-0 z-20 pointer-events-none shadow-2xl">
+                  {overlay(idx)}
+                </div>
+              )}
             </div>
           </SwiperSlide>
         ))}
@@ -59,7 +66,9 @@ export default function ImageCarousel({
           <ChevronRight className="w-5 h-5 text-gray-700" />
         </button>
         {/* Custom Pagination Dots */}
-        <div className={`swiper-pagination-custom absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2 ${indicatorClassName}`}></div>
+        <div
+          className={`swiper-pagination-custom absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2 ${indicatorClassName}`}
+        ></div>
       </Swiper>
     </div>
   );

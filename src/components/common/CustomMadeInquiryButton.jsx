@@ -24,7 +24,7 @@ export default function CustomMadeInquiryButton({ className = "" }) {
   }, [open]);
 
   return (
-    <div className={`relative w-full ${className}`} ref={ref}>
+    <div className={`relative max-w-50 w-full ${className}`} ref={ref}>
       <button
         className="btn-primary w-full font-semibold flex items-center justify-center gap-2 relative z-10"
         onClick={() => setOpen((v) => !v)}
