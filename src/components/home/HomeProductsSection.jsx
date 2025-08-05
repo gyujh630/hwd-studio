@@ -43,9 +43,13 @@ export default function HomeProductsSection({ vh }) {
         {/* 배경 장식 */}
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
         {/* 왼쪽: 이미지 슬라이더 */}
-        <div className="relative">
+                <div className="relative">
           <ImageCarousel
-            images={section.images || []}
+            images={
+              section.media
+                ? section.media.map(item => item.src)
+                : []
+            }
             imageClassName="object-cover"
           />
         </div>
